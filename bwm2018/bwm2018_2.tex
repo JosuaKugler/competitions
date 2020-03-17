@@ -1,0 +1,512 @@
+%%% !TeX program = lualatex
+\documentclass[12pt]{article}
+%inputenc: umlaute eingeben, fontenc: umlaute darstellen
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+%neue deutsch rechtschreibung
+\usepackage[ngerman]{babel}
+\usepackage{enumitem}
+%paar schöne erweiterungen für mathe
+\usepackage{amsmath,amssymb,amstext,amsthm}
+\usepackage[fleqn,tbtags]{mathtools}
+\numberwithin{equation}{subsection}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\rhead{Josua Kugler}
+\usepackage{subcaption}
+\usepackage{tikz}
+\usetikzlibrary{angles,quotes,babel}
+\newtheorem{df}{Definition}
+\newtheorem{satz}{Satz}
+\newtheorem{lemma}{Lemma}
+\newtheorem{fakt}{Fakt}
+\newtheorem{korollar}{Korollar}
+\newcommand{\RM}[1]{\MakeUppercase{\romannumeral #1{.}}}
+
+\author{Josua Kugler}
+\title{Bundeswettbewerb Mathematik 2. Runde}
+\begin{document}
+\maketitle
+
+\section{Aufgaben}
+\begin{enumerate}
+	\item Anja und Bernd nehmen abwechselnd Steine von einem Haufen mit anfangs $n$ Steinen ($n\ge2$). Anja beginnt und nimmt in ihrem ersten Zug wenigstens einen, aber nicht alle Steine weg. Danach nimmt, wer am Zug ist, mindestens einen, aber höchstens so viele Steine weg, wie im unmittelbar vorhergehenden Zug weggenommen wurden. Wer den letzten Stein wegnimmt, gewinnt.\\
+	Bei welchen Werten von $n$ kann Anja den Gewinn erzwingen, bei welchen kann es Bernd?
+	\item Wir betrachten alle reellen Funktionen $f$ mit der Eigenschaft\\ $f(1-f(x))=x$ für alle $x\in\mathbb{R}$.
+	\begin{enumerate}
+		\item Weise die Existenz einer solchen Funktion durch Angabe eines konkreten Beispiels nach.
+		\item Wir definieren für jede solche Funktion $f$ die Summe\\
+		$S_f=f(-2017)+f(-2016)+...f(-1)+f(0)+f(1)+...+f(2017)+f(2018).$\\
+		Bestimme die Menge aller Werte, die derartige Summen $S_f$ annehmen können.
+	\end{enumerate}
+	\item Gegeben sind eine Strecke $AB$ und auf ihr ein Punkt $T$, wobei $T$ näher an $B$ liegt als an $A$.\\
+	Zeige, dass es zu jedem von $T$ verschiedenen Punkt $C$ auf der Senkrechten zur Strecke $AB$ durch $T$ jeweils genau einen Punkt $D$ auf der Strecke $AC$ mit $\measuredangle CBD\ = \ \measuredangle BAC$ gibt und dass dann das Lot zu $AC$ durch $D$ stets durch ein und den selben, von der Wahl von $C$ unabhängigen Punkt $E$ auf der Geraden $AB$ geht.
+	\item Bestimme alle natürlichen Zahlen $n$ mit $n>1$, für die gilt:\\
+	Färbt man jeden Gitterpunkt eines quadratischen Gitters in der Ebene mit je einer von $n$ vorgegebenen Farben, dann gibt es immer drei Gitterpunkte gleicher Farbe, die ein gleichschenklig-rechtwinkliges Dreieck bilden, dessen Katheten parallel zu den Gitterlinien sind.
+\end{enumerate}
+	\pagebreak
+
+\section{Lösungen}
+\subsection{Aufgabe 1}
+
+\paragraph{Vorbemerkungen:} Da es bei dem Spiel um Steine geht, die nicht zerteilt werden können, sind alle Variablen, wenn nicht explizit anders definiert, natürliche Zahlen. Im Folgenden sei die \glqq größte enthaltene\grqq\ Zweierpotenz $2^n$ einer Zahl $Z$ diejenige Zweierpotenz, für die gilt: 
+\[\left(2^n\mid Z\right)\land\left(2^{n+1}\nmid Z\right)\]
+
+
+\paragraph{Vermutung:} Bernd kann bei allen Zweierpotenzen $2^n$ mit $n>0$ den Gewinn erzwingen, Anja kann dies bei allen anderen Zahlen.
+
+\begin{korollar}
+\label{ug2n}
+Alle natürlichen Zahlen lassen sich als Produkt einer ungeraden Zahl und einer Zweierpotenz darstellen:
+\begin{align*}
+	(2k+1)*2^n &&\left| k,n \ge 0 \right.
+\end{align*}
+\end{korollar}
+
+\begin{proof} Das folgt aus dem Fundamentalsatz der Arithmetik. Dabei lassen sich alle Zweier der Primfaktorzerlegung im Term $2^n$ zusammenfassen. Bei ungeraden Zahlen wird $n=0$. Alle restlichen, also ungeraden Faktoren, ergeben im Produkt wieder eine ungerade Zahl und lassen sich demnach mit dem ersten Term $2k+1$ darstellen. Nur bei Zweierpotenzen wird $k=0$.
+\end{proof}
+\paragraph{Teil (a): Anja gewinnt}
+\subparagraph{These Gewinnstrategie:}
+Anja muss, um den Sieg zu erzwingen, in ihrem Zug die größte enthaltene Zweierpotenz von $A$ abziehen, wobei $A$ der Anzahl der Steine vor ihrem Zug entspricht.
+
+\begin{proof}
+Es gilt nach Korollar \ref{ug2n}:
+\begin{align*}
+A=(2k+1)*2^n &&\left| n\ge 0; k\ge1 \right.
+\end{align*}
+Laut Strategie muss sie in ihrem Zug $2^n$ Steine wegnehmen.($2^n|(2k+1)*2^n$, aber $2^{n+1}\nmid (2k+1)*2^n$, da $2\nmid 2k+1$).
+Für Bernd bleibt dann folgende Zahl übrig:
+\begin{align*}
+	(2k+1)*2^n-2^n=2k*2^n&&\left|k\ge 0, n\ge 0\right.
+\end{align*}
+\subparagraph{Fall aa)}
+$k=0$: Anja hat gewonnen, das Spiel ist beendet.
+Dieser Fall darf ja laut Regeln nicht nach dem ersten Zug eintreten. Deshalb kann Anja bei $k=0\hspace{5mm} \to\hspace{5mm} (2k+1)*2^n=2^n$, also einer Zweierpotenz als Startzahl, den Sieg nicht mit dieser Gewinnstrategie erzwingen.
+\subparagraph{Fall ab)}
+$k>0$: Bernd zieht in seinem Zug eine beliebige Anzahl($<2^n$) an Steinen $B$ ab, die wir nach Korollar \ref{ug2n} folgendermaßen darstellen dürfen:
+\begin{align*}
+	B&=(2r+1)*2^m&&\left|m,r\ge 0\right.\\
+	2^n&\ge(2r+1)*2^m&&\left| *2^{-m}\right.\\
+	2^{n-m}&\ge(2r+1)\ge 1
+\end{align*}
+Wir ziehen nun $B$ von der Anzahl an Steinen ab, die Anja übriggelassen hat.
+\begin{align*}
+	&2k*2^n-(2r+1)*2^m&&|k>0\ ,n,m,r\ge 0\\
+	&=2^m*\left(2k*2^{n-m}-2r-1\right)\\
+	&\ge 1*\left(2*(2r+1)-2r-1\right)\\
+	&=1*(2r+1)\\
+	&\ge 1
+\end{align*}
+Bernd kann also den Sieg nicht erzwingen.
+
+Zu zeigen bleibt, dass Anja nun wieder die Gewinnstrategie anwenden kann, d.h. dass sie die größte  enthaltene Zweierpotenz abziehen kann.
+Dafür muss gewährleistet sein, dass die größte enthaltene Zweierpotenz kleinergleich $B$ ist, da Anja höchstens so viel abziehen darf wie Bernd.
+Wir betrachten also die Zahl, die nach Bernds Zug übrig ist: \[2^m*\underbrace{\left(2^k*2^{n-m}-2r-1\right)}_{\mathrm{ungerade}}\]
+Aus dieser Darstellung folgt eindeutig, dass $2^m$ die größte enthaltene Zweierpotenz ist.
+Bernd hat in seinem letzten Zug $B=(2r+1)*2^m$ Steine abgezogen. Mit $r\ge 0$ folgt: $B\ge 2^m$
+Damit ist gezeigt, dass Anja gemäß der Gewinnstrategie verfahren kann. Irgendwann wird Fall aa) eintreten und Anja gewinnt.
+\end{proof}
+
+
+\paragraph{Teil (b): Bernd gewinnt}
+\begin{proof}
+Wir betrachten nun alle Startzahlen $S$, für die noch nicht gezeigt wurde, dass Anja den Sieg erzwingen kann. Das sind alle Zweierpotenzen $2^n$.
+Anja zieht nun eine beliebige Zahl $A=(2k+1)*2^m$ davon ab:
+\begin{align*}
+	&2^n-(2k+1)*2^m\\
+	&=\left(2^{n-m}-2k-1\right)*2^m
+\end{align*}
+Da die größte enthaltene Zweierpotenz hier $2^m$ ist und $A=(2k+1)*2^m\ge 2^m$ kann Bernd die größte enthaltene Zweierpotenz abziehen und ab jetzt Anjas Gewinnstrategie anwenden. Wie oben gezeigt, kann man damit den Sieg erzwingen.
+\end{proof}
+Damit ist die Vermutung bestätigt: Bernd kann bei allen Zweierpotenzen den Sieg erzwingen, Anja kann dies bei allen anderen Anzahlen von Steinen.\\
+s.d.g
+
+\subsection{Aufgabe 2}
+\subsubsection{Teil (a)}
+\begin{satz}
+\label{funktion2}
+Für jedes $x\in\mathbb{R}$ gilt: $f(1-f(x))=x$ mit
+\[
+f:\left\{ \begin{array}{c | c}
+	-x & 2k+0.5 < x \leq 2k+1.5\ \mathrm{mit}\ k\in\mathbb{N}_0\\
+	x-1 & 2k+1.5 < x \leq 2k+2.5\ \mathrm{mit}\ k\in\mathbb{N}_0\\
+	-x+2 & -2k-0.5 \leq x < -2k+0.5\ \mathrm{mit}\ k\in\mathbb{N}_0\\
+	x+1 & -2k-1.5 \leq x < -2k-0.5\ \mathrm{mit}\ k\in\mathbb{N}_0\\
+	0.5 & x=0.5
+\end{array} \right\}
+\].
+\end{satz}
+
+\begin{proof}
+	 Satz \ref{funktion2} beweisen wir mithilfe einer einfachen Fallunterscheidung.
+\begin{description}
+\item[Fall 1:]
+Für $x$ gilt:
+\[2k+0.5 < x \leq 2k+1.5\ \mathrm{mit}\ k\in\mathbb{N}_0\]
+Daraus folgt für $y=f(x)$:
+\[-2k-1.5 \leq y < -2k-0.5\ \mathrm{und}\ y=-x\]
+Für $z=1-y$ gilt also:
+\[2k+1.5 < z \leq 2k+2.5\ \mathrm{und}\ z=1-y\]
+Daher ergibt sich für $a=f(z)$:
+\[a=z-1\]
+Schließlich folgt:
+\[f(1-f(x))=f(1-y)=f(z)=a=z-1=1-y-1=1+x-1=x\]
+
+\item[Fall 2]
+Für $x$ gilt:
+\[2k+1.5 < x \leq 2k+2.5\ \mathrm{mit}\ k\in\mathbb{N}_0\]
+Daraus folgt für $y=f(x)$:
+\[2k+0.5 < y \leq 2k+1.5\ \mathrm{und}\ y=x-1\]
+Für $z=1-y$ gilt also:
+\[-2k-0.5 \leq z < -2k+0.5\ \mathrm{und}\ z=1-y\]
+Daher ergibt sich für $a=f(z)$:
+\[a=-z+2\]
+Schließlich folgt:
+\[f(1-f(x))=f(1-y)=f(z)=a=-z+2=-1+y+2=-1+x-1+2=x\]
+
+\item[Fall 3]
+Für $x$ gilt:
+\[-2k-1.5 \leq x < -2k-0.5\ \mathrm{mit}\ k\in\mathbb{N}_0\]
+Daraus folgt für $y=f(x)$:
+\[-2k-0.5 \leq y < -2k+0.5\ \mathrm{und}\ y=x+1\]
+Für $z=1-y$ gilt also:
+\[2k+0.5 < z \leq 2k+1.5\ \mathrm{und}\ z=1-y\]
+Daher ergibt sich für $a=f(z)$:
+\[a=-z\]
+Schließlich folgt:
+\[f(1-f(x))=f(1-y)=f(z)=a=-z=-1+y=-1+x+1=x\]
+
+\item[Fall 4]
+Für $x$ gilt:
+\[-2k-0.5 \leq x < -2k+0.5\ \mathrm{mit}\ k\in\mathbb{N}_0\]
+Daraus folgt für $y=f(x)$:
+\[2k+1.5 < y \leq 2k+2.5\ \mathrm{und}\ y=-x+2\]
+Für $z=1-y$ gilt also:
+\[-2k-1.5 \leq z < -2k-0.5\ \mathrm{und}\ z=1-y\]
+Daher ergibt sich für $a=f(z)$:
+\[a=z+1\]
+Schließlich folgt:
+\[f(1-f(x))=f(1-y)=f(z)=a=z+1=1-y+1=1+x-2+1=x\]
+\item[Fall 5]
+Aus $x=0.5$ folgt $f(x)=0.5$, $(1-f(x))=0.5$ und damit $f(1-f(x))=0.5$, also
+\[f(1-f(x))=0.5=x\]
+\end{description}
+\end{proof}
+\subsubsection{Teil (b)}
+\begin{proof}
+
+Gruppiert man die Summe $S_f$ folgendermaßen um:
+\begin{align*}
+	S_f&=f(1)+f(0)+f(2)+f(-1)+...+f(n)+f(1-n)+...+f(2018)+f(-2017),
+	\intertext{so erhält man folgende Darstellung mit der Summenformel:}
+	S_f&=\sum_{k=1}^{2018} f(k)+f(1-k)
+\end{align*}
+Nun wählen wir in der Funktion $f(x)$ den Term $1-f(k)$ als $x$-Wert:
+\begin{alignat*}{2}
+	& f(1-f(x		&&))=x\\
+	& f(1-f(1-f(k)	&&))=1-f(k)
+\end{alignat*}
+Mit $f(1-f(k))=k$ folgt:
+\begin{align*}
+	f(1-k)&=1-f(k)
+	\intertext{Einsetzen in $S_f$:}
+	S_f&=\sum_{k=1}^{2018} f(k)+f(1-k)\\
+	&= \sum_{k=1}^{2018} f(k)+1-f(x)\\
+	&= \sum_{k=1}^{2018} 1\\
+	&= 2018*1 = 2018
+\end{align*}
+Das Ergebnis der Summe $S_f$ ist also in allen Fällen, unabhängig von der tatsächlichen Funktion, 2018.
+\end{proof}
+s.d.g
+
+\subsection{Aufgabe 3}
+Ein beliebiger Punkt $P$ habe die Koordinaten $P(x_P|y_P)$. Eine Gerade durch zwei Punkte $P$ und $Q$ heiße $g_{PQ}: y = m_{PQ}*x+c_{PQ}$. Die Länge einer Strecke von $P$ nach $Q$ sei $|PQ|$.
+
+O.B.d.A sei $x_A=0$ und $y_A=0$. Daraus folgt: $x_E=0$ und $x_B=0$.
+
+\begin{figure}
+	\begin{tikzpicture}
+	\coordinate (A) at (0,0);
+	\coordinate (B) at (6,0);
+	\coordinate (C) at (4,4);
+	\coordinate (T) at (4,0);
+	\coordinate (D) at (1.5,1.5);
+	\coordinate (D') at (0,2);
+	\coordinate (E) at (3,0);
+	
+	\draw (A)--(B) node[right]{$B$};
+	\draw (B)--(C) node[above]{$C$};
+	\draw (C)--(A) node[left]{$A$};
+	\draw (C)--(T) node[below]{$T$};
+	\draw (B)--(D') node[midway,below]{$g$};
+	
+	\path (B) -- (A) -- (C) pic["$\alpha$", draw, black, angle radius = 1cm] {angle=B--A--C};
+	\path (C) -- (B) -- (D) pic["$\alpha$", draw, black, angle radius = 1cm] {angle=C--B--D};
+	\end{tikzpicture}
+	\caption{Dreieck laut Aufgabenkonstruktion mit Halbgerade $g$}
+	\label{skizze1}
+\end{figure}
+
+
+\subsubsection{Zeige, dass es zu jedem von $T$ verschiedenen Punkt $C$ auf der Senkrechten zur Strecke $AB $ durch $T$ jeweils genau einen Punkt $D$ auf der Strecke $AC$ mit $\measuredangle CBD\ = \ \measuredangle BAC$ gibt}
+\begin{proof}
+$g$ sei eine Halbgerade mit Anfangspunkt $B$, die in einem Winkel, der gleich groß ist wie $\measuredangle BAC$, zur Strecke $BC$ steht. Zu zeigen ist, dass es genau einen Schnittpunkt $D$ von $g$ und $AC$ gibt.
+Trivialerweise gibt es höchstens einen Schnittpunkt, da zwei Geraden/Halbgeraden/Strecken sich höchstens einmal schneiden. In allen Fällen mit $\measuredangle CBD=\measuredangle BAC < \measuredangle CBA$ gibt es einen Schnittpunkt.(siehe Abbildung \ref{skizze1})\\
+\textbf{Annahme:} Es gibt einen Fall, in dem es keinen Schnittpunkt gibt.
+Daraus folgt: 
+\[\measuredangle BAC > \measuredangle CBA\]
+Die Sinusfunktion ist im Intervall $0^\circ<x<90^\circ$ streng monoton steigend. Das impliziert: \[x_1>x_2\hspace{5mm} \to \hspace{5mm} sin(x_1)>sin(x_2)\hspace{5mm} \mathrm{mit}\hspace{5mm} 0^\circ<x_1,x_2<90^\circ\]
+Aus $0^\circ<\measuredangle BAC, \measuredangle CBA<90^\circ$ (Innenwinkelsumme im Dreieck $ATC$ und $TBC$) folgt:
+\begin{align*}
+	sin(\measuredangle BAC) &> sin(\measuredangle CBA)\\
+	\dfrac{|CT|}{|AT|} &> \dfrac{|CT|}{|TB|}&&\left|*\dfrac{|AT|*|TB|}{|CT|}\right.\\
+	|TB|&>|AT|
+\end{align*}
+Laut Aufgabenstellung soll $T$ näher an $B$ als an $A$ liegen. Das impliziert, dass $|TB|<|AT|$.
+Dadurch wurde also die Annahme ad absurdum geführt und die Behauptung bewiesen.
+\end{proof}
+
+\subsubsection{Zeige, dass dann das Lot zu $AC$ durch $D$ stets durch ein und den selben, von der Wahl von $C$ unabhängigen Punkt $E$ auf der Geraden $AB$ geht}
+
+\begin{figure}
+	\begin{tikzpicture}
+	\coordinate (A) at (0,0);
+	\coordinate (C) at (4,4);
+	\coordinate (T) at (4,0);
+	\coordinate (D) at (1.5,1.5);
+	\coordinate (G) at (1.5,0);
+	
+	\draw (T)--(C) node[above]{$C$};
+	\draw (A)--(T) node[right]{$T$};
+	\draw (A)--(G) node[below]{$G$};
+	\draw (G)--(D) node[left]{$D$};
+	\draw (C)--(A) node[left]{$A$};
+	
+	\path (T) -- (A) -- (C) pic["$\alpha$", draw, black, angle radius = 1cm] {angle=B--A--C};
+	\end{tikzpicture}
+	\caption{Die beiden ähnlichen Dreiecke $AGD$ und $ATC$}
+	\label{Behauptung1}
+\end{figure}
+
+\begin{lemma}
+\[x_D=\dfrac{|AD|}{|AC|}*x_C\ \mathrm{und}\ y_D=\dfrac{|AD|}{|AC|}*y_C\]
+\label{lemma31}
+\end{lemma}
+
+\begin{proof}
+Dazu definieren wir Punkt $G$ mit den Koordinaten $G(x_D|0)$. Betrachtet man nun das Dreieck $AGD$ und das Dreieck $ATC$, so erkennt man: $GD||TC$ (siehe Abbildung \ref{Behauptung1}). Mithilfe der Strahlensätze lässt sich erkennen, dass 1.) $\dfrac{|AG|}{|AT|}=\dfrac{|AD|}{|AC|}$ und 2.) $\dfrac{|GD|}{|TC|}=\dfrac{|AD|}{|AC|}$. Dabei gilt: $|GD|=y_D,\ |AG|=x_D,\ |TC|=y_C$ und $|AT|=x_C$.
+Mit Einsetzen ergibt sich für 1.)
+\begin{align*}
+	\dfrac{x_D}{x_C}&=\dfrac{|AD|}{|AC|}&&|*x_C\\
+	x_D&=\dfrac{|AD|}{|AC|}*x_C
+	\intertext{und für 2.)}
+	\dfrac{|y_D|}{|y_C|}&=\dfrac{|AD|}{|AC|}&&|*y_C\\
+	y_D&=\dfrac{|AD|}{|AC|}*y_C
+\end{align*}
+\end{proof}
+
+\begin{figure}
+	\begin{subfigure}{0.5\textwidth}
+		\begin{tikzpicture}
+		\coordinate (A) at (0,0);
+		\coordinate (B) at (6,0);
+		\coordinate (C) at (4,4);
+		\coordinate (T) at (4,0);
+		\coordinate (D) at (1.5,1.5);
+		\coordinate (E) at (3,0);
+		
+		\draw[red] (A)--(B) node[below]{$B$};
+		\draw[red] (B)--(C) node[above]{$C$};
+		\draw[red] (C)--(A) node[below]{$A$};
+		\draw (C)--(T) node[below]{$T$};
+		\draw (B)--(D) node[left]{$D$};
+		
+		\path (B) -- (A) -- (C) pic["$\alpha$", draw, red, angle radius = 1cm] {angle=B--A--C};
+		\path (C) -- (B) -- (D) pic["$\alpha$", draw, black, angle radius = 1cm] {angle=C--B--D};
+		\path (B) -- (T) -- (C) pic[".", draw, black, angle radius = 0.4cm] {angle=B--T--C};
+		\path (C) -- (T) -- (A) pic[".", draw, black, angle radius = 0.4cm] {angle=C--T--A};
+		\path (A) -- (C) -- (B) pic["$\gamma$", draw, black, angle radius = 0.8cm, angle eccentricity=0.8] {angle=A--C--B};
+		\end{tikzpicture}
+		\label{abcrot}
+		\subcaption{Dreieck $ABC$ ist rot gefärbt}
+	\end{subfigure}
+	\begin{subfigure}{0.5\textwidth}
+		\begin{tikzpicture}
+		\coordinate (A) at (0,0);
+		\coordinate (B) at (6,0);
+		\coordinate (C) at (4,4);
+		\coordinate (T) at (4,0);
+		\coordinate (D) at (1.5,1.5);
+		\coordinate (E) at (3,0);
+		
+		\draw (A)--(B);
+		\draw[red] (B)--(C) node[above]{$C$};
+		\draw (D)--(A) node[below]{$A$};
+		\draw (C)--(T) node[below]{$T$};
+		\draw[red] (D)--(B) node[below]{$B$};
+		\draw[red] (C)--(D) node[left]{$D$}; 
+		
+		\path (B) -- (A) -- (C) pic["$\alpha$", draw, black, angle radius = 1cm] {angle=B--A--C};
+		\path (C) -- (B) -- (D) pic["$\alpha$", draw, red, angle radius = 1cm] {angle=C--B--D};
+		\path (B) -- (T) -- (C) pic[".", draw, black, angle radius = 0.4cm] {angle=B--T--C};
+		\path (C) -- (T) -- (A) pic[".", draw, black, angle radius = 0.4cm] {angle=C--T--A};
+		\path (A) -- (C) -- (B) pic["$\gamma$", draw, black, angle radius = 0.8cm, angle eccentricity=0.8] {angle=A--C--B};
+		\end{tikzpicture}
+		\label{dbcrot}
+		\subcaption{Dreieck $DBC$ ist rot gefärbt}
+	\end{subfigure}
+	\caption{Die beiden Dreiecke $ABC$ und $DBC$ sind ähnlich}
+\end{figure}
+
+\begin{lemma}
+\[\dfrac{|DC|}{|CA|}=\dfrac{y_C^2+|TB|^2}{y_C^2+x_C^2}\]
+\label{lemma32}
+\end{lemma}
+
+\begin{proof}
+Zunächst betrachten wir die Dreiecke $ABC$ und $DBC$. Sie haben einen gemeinsamen Winkel $ACB$. Zudem sind die Winkel $CBD$ und $BAC$ laut Aufgabenstellung gleich. Damit sind die beiden Dreiecke ähnlich. Es gilt:
+\begin{align*}
+	\dfrac{|DC|}{|CB|}&=\dfrac{|CB|}{|AC|}&&\left|*\dfrac{|CB|}{|AC|}\right.\\
+	\dfrac{|DC|}{|AC|}&=\dfrac{|CB|^2}{|AC|^2}
+\end{align*}
+In Abbildung \ref{Behauptung1} lässt sich erkennen, dass $ATC$ und $TBC$ rechtwinklige Dreiecke sind, sodass
+$|CB|^2=|CT|^2+|TB|^2=y_C^2+|TB|^2$ und $|AC|^2=|CT|^2+|AT|^2=y_C^2+x_C^2$.
+Mit Einsetzen ergibt sich Lemma \ref{lemma32}.
+\end{proof}
+
+\begin{proof}
+Die Gerade $g_{AC}$ hat die Steigung $m_{AC}=\dfrac{y_C-y_A}{x_C-x_A}=\dfrac{y_C}{x_C}$ und den $y$-Achsenabschnitt $c_{AC}=0$.
+%Zeichnung mit Steigungsdreieck
+\[\to g_{AC}: y=\dfrac{y_C}{x_C}*x\]
+\[g_DE \vdash g_{A}C\hspace{5mm}\to \hspace{5mm} m_{DE}=-\dfrac{1}{m_{AC}}=-\dfrac{x_C}{y_C}\]
+Zudem ist $g_{DE}$ um $x_D$ nach rechts und $y_D$ nach oben verschoben.
+\[g_{DE}: y=-\dfrac{x_C}{y_C}*(x-x_D)+y_D\]
+$g_{DE}$ schneidet die $x-Achse$ im Punkt $E$, sodass $x_E$ der Nullstelle von $g_{DE}$ entspricht
+\begin{align*}
+	0&=-\dfrac{x_C}{y_C}*(x_E-x_D)+y_D\\
+	0&=-\dfrac{x_C}{y_C}*x_E+\dfrac{x_C}{y_C}*x_D+y_D\\
+	\dfrac{x_C}{y_C}*x_E&=\dfrac{x_C}{y_C}*x_D+y_D\\
+	x_E&=x_D+\dfrac{y_C}{x_C}*y_C
+	\intertext{Einsetzen von Lemma \ref{lemma31}}
+	x_E&=\dfrac{|AD|}{|AC|}*x_C+\dfrac{y_C}{x_C}*\left(\dfrac{|AD|}{|AC|}*y_C\right)\\
+	&=\dfrac{|AD|}{|AC|}*\left(x_C+\dfrac{{y_C}^2}{x_C}\right)\\
+	&=\dfrac{|AC|-|DC|}{|AC|}*\left(x_C+\dfrac{{y_C}^2}{x_C}\right)\\
+	&=\left(1-\dfrac{DC}{AC}\right)*\left(x_C+\dfrac{{y_C}^2}{x_C}\right)
+	\intertext{Einsetzen von Lemma \ref{lemma32}}
+	x_E&=\left(1-\dfrac{y_C^2+|TB|^2}{y_C^2+x_C^2}\right) * \left(x_C+\dfrac{{y_C}^2}{x_C}\right)\\
+	&=1*\left(x_C+\dfrac{{y_C}^2}{x_C}\right) - \dfrac{y_C^2+|TB|^2}{y_C^2+x_C^2} * \left(x_C+\dfrac{{y_C}^2}{x_C}\right)\\
+	&=x_C + \dfrac{{y_C}^2}{x_C} - \dfrac{x_C*y_C^2 + x_C*|TB|^2}{y_C^2+x_C^2} - \dfrac{y_C^4 + y_C^2*|TB|^2}{x_C^3+y_C^2*x_C}\\
+	&=x_C + \dfrac{{y_C}^2}{x_C}*\dfrac{y_C^2+x_C^2}{y_C^2+x_C^2} - \dfrac{x_C^2*y_C^2 + x_C^2*|TB|^2}{x_C^3+y_C^2*x_C} - \dfrac{y_C^4 + y_C^2*|TB|^2}{x_C^3+y_C^2*x_C}\\
+	&=x_C + \dfrac{y_C^4+y_C^2*x_C^2 - x_C^2*y_C^2 - x_C^2*|TB|^2 - y_C^4 - y_C^2*|TB|^2}{x_C^3+y_C^2*x_C}\\
+	&=x_C - \dfrac{x_C^2*|TB|^2 + y_C^2*|TB|^2}{x_C^3+y_C^2*x_C}\\
+	&=x_C - \dfrac{|TB|^2*\left(y_C^2+x_C^2\right)}{x_C*\left(x_C^2+y_C^2\right)}\\
+	x_E&=x_C - \dfrac{|TB|^2}{x_C}
+\end{align*}
+$x_E$ ist also unabhängig von $y_C$ und damit unabhängig von der Wahl von $C$. Da die Gleichung $x_E=x_C - \dfrac{|TB|^2}{x_C}$ auf $x_E$ als Nullstelle beruht, die $x$-Achse aber gleichzeitig der Gerade $AB$ entspricht, liegt $E$ in jedem Fall auf der Geraden $AB$.
+\end{proof}
+s.d.g.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\pagebreak
+\subsection{Aufgabe 4}
+
+\begin{df}
+	Eine Reihe der Länge $l$ sei eine Menge von  $l$ Gitterpunkten, die alle die gleiche $y-$Koordinate besitzen. In einer Reihe gibt es einen Startpunkt, er hat die niedrigste $x-$Koordinate, sowie einen Endpunkt mit der höchsten $x-$Koordinate. Alle Punkte einer Reihe haben den gleichen Abstand zum Vorgänger wie zum Nachfolger. Ausnahme sind Start- sowie Endpunkt, da sie ja keinen Vorgänger bzw. Nachfolger haben.
+\end{df}
+
+\begin{satz}
+	Für alle natürlichen Zahlen $n$ mit $n>1$ gilt:
+	Färbt man jeden Gitterpunkt eines quadratischen Gitters in der Ebene mit je einer von $n$ vorgegebenen Farben, dann gibt es immer drei Gitterpunkte gleicher Farbe, die ein gleichschenklig-rechtwinkliges Dreieck bilden, dessen Katheten parallel zu den Gitterlinien sind. 
+	\label{satz4}
+\end{satz}
+
+\begin{proof}
+Für den Beweis bedienen wir uns zunächst diverser Hilfssätze.
+\begin{figure}
+	\begin{subfigure}{0.5\textwidth}
+		\begin{tikzpicture}[scale=0.325]
+		\draw[help lines] (-10,-10) grid (10,10);
+		\foreach \x in {-10,-9,...,10} \foreach \y in {-10,-9,...,10} \draw[fill,color=gray] (\x,\y) circle[radius=3pt];
+		\foreach \x in {-10,-8,...,10} \foreach \y in {-10,-8,...,10} \draw[fill,color=blue] (\x,\y) circle[radius=4pt];
+		\foreach \x in {-10,-8,...,10} \draw[fill,color=red] (\x,0) circle[radius=4pt];
+		\end{tikzpicture}
+		\subcaption{Rot: Gitterpunkte mit Farbe 1 gefärbt\\ Blau: Gitterpunkte dürfen nicht mit Farbe 1 gefärbt werden\\
+		Grau: Farbe ist für den Beweis irrelevant}
+		\label{figure41a}
+	\end{subfigure}
+	\begin{subfigure}{0.48\textwidth}
+		\begin{tikzpicture}[scale=0.65]
+		\draw[help lines] (-5,-5) grid (5,5);
+		\foreach \x in {-5,...,5} \foreach \y in {-5,...,5} \draw[fill,color=blue] (\x,\y) circle[radius=2pt];
+		\foreach \x in {-5,...,5} \draw[fill,color=red] (\x,0) circle[radius=2pt];
+		\draw[thick] (-4,0)--(1,0)--(1,5)--(-4,0);
+		\end{tikzpicture}
+		\subcaption{vereinfacht von (a)\\ Rot: Gitterpunkte mit Farbe 1 gefärbt\\ Blau: Gitterpunkte dürfen nicht mit Farbe 1 gefärbt werden}
+		\label{figure41b}
+	\end{subfigure}
+	\begin{subfigure}{0.7\textwidth}
+		\begin{tikzpicture}
+			\draw[help lines] (1,-6) grid (9,0);
+			\foreach \x in {1,2,...,9} \draw[fill,color=blue] (\x,0) circle[radius=2pt];
+			\foreach \x in {1,8} \draw[fill,color=red] (\x,0) circle[radius=2pt];
+			\foreach \x in {3,6,9} \draw[fill,color=red] (\x,0) circle[radius=3pt];
+			\foreach \x in {3,6,9} \foreach \y in {3,6} \draw[fill,color=blue] (\x,-\y) circle[radius=2pt];
+			\draw[thick] (3,-3)--(3,-6)--(6,-3)--(3,-3);
+		\end{tikzpicture}
+		\subcaption{Blau: Aus diesen sechs Punkten können nun drei ausgewählt werden, sie ergeben ein gleichschenklig-rechtwinkliges Dreieck, dessen Katheten parallel zu den Gitterlinien sind\\
+		Rot: Sind mit Farbe $n-1$ gefärbt}
+	\label{figure41c}
+	\end{subfigure}
+	\caption{Ausschnitt aus einem quadratischen Gitter}
+	\label{figure41}
+\end{figure}
+
+\begin{korollar}
+	Färbt man eine Reihe der Länge $n$ mit zwei Farben, so entsteht stets eine neue Reihe der Länge $l$ bestehend aus gleichfarbigen Gitterpunkten. Dabei kann $l$ beliebig groß werden, wenn man $n$ nur groß genug wählt.
+	\label{zweiFarbenlemma}
+\end{korollar}
+
+\begin{lemma}
+	Färbt man eine Reihe $R$ der Länge $n$ mit $m$ Farben, so entsteht stets eine neue Reihe der Länge $l$ bestehend aus gleichfarbigen Gitterpunkten. Dabei kann $l$ beliebig groß werden, wenn man $n$ nur groß genug wählt.
+	\label{xfarbenlemma}
+\end{lemma}
+\begin{proof}
+	Man ordne $R$ in zwei Klassen ein. Dabei stehe die erste Klasse für die erste der $m$ Farben, die zweite Klasse stehe dafür, dass dieser Gitterpunkt nicht mit der ersten der $m$ Farben gefärbt werde.\\
+	Es wird sich nun eine Reihe der Länge $k$ ergeben, wobei $k$ gemäß Korollar \ref{zweiFarbenlemma} beliebig groß werden kann. Entweder jeder Punkt der Reihe hat die erste Farbe, dann wählen wir $k=l$ und dementsprechend auch die Länge von $R$, oder die Reihe ergibt sich mit der zweiten der beiden Farben. Dann färben wir diese Reihe wieder mit zwei Farben, wobei die erste Farbe für die zweite der $m$ Farben stehe und die zweite dafür stehe, dass dieser Gitterpunkt nicht mit der zweiten der $m$ Farben gefärbt werden darf. Da sich jeder Gitterpunkt dieser Reihe aber deshalb in dieser Reihe befindet, weil er nicht mit der ersten der $m$ Farben gefärbt wird, darf dieser Gitterpunkt weder mit der ersten noch mit der zweiten der $m$ Farben gefärbt werden. Dieses Schema kann man fortsetzen, bis die erste der beiden Farben für die $m-1.$ der $m$ Farben steht und die zweite dafür steht, dass es nicht mit der $1.$ bis $m-1.$ der $m$ Farben gefärbt werden darf. Es bleibt also nur die $m.$ der $m$ Farben übrig. Egal, mit welcher der beiden Farben sich eine Reihe ergibt, ist es jetzt eine Reihe, in der alle Punkte die gleiche Farbe haben. Die Größe dieser Reihe kann nach Korollar \ref{zweiFarbenlemma} frei gewählt werden, in dem man rückwärts vorgeht und jeder Reihe die Länge zuweist, die sie benötigt, damit die nachfolgende und schließlich die letzte Reihe die geforderte Mindestlänge hat.
+\end{proof}
+
+Bei Färbung des Gitters entsteht also gemäß Lemma \ref{xfarbenlemma} eine Reihe aus gleichfarbigen Punkten, deren Länge so groß werden kann, wie benötigt, indem die Seitenlänge des Gitters groß genug gewählt wird. Die Farbe der Punkte aus dieser Reihe sei Farbe $1$, die Länge der Reihe sei $a$. Der Abstand der Punkte sei $a_1$
+Diese Reihe sorgt dafür, dass es mindestens $a-1$ Reihen der Länge $a$ gibt, von denen kein Punkt mit Farbe $1$ gefärbt werden darf, ohne dass sich ein gleichschenklig-rechtwinkliges Dreieck bildet, dessen Katheten parallel zu den Gitterlinien sind (siehe Abbildung \ref{figure41a} und \ref{figure41b}). Das liegt daran, dass jeder Punkt $P$ mit der gleichen $y-$Koordinate und der gleichen Farbe wie ein Punkt $Q\in S$ dann ein solches Dreieck bildet, wenn es einen dritten Punkt $R\in S$ gibt, sodass gilt:
+$|y_P-y_Q|=|x_R-x_Q|$. Da $S$ die Länge $a$ hat, gibt es zu jedem Punkt in $S$ einen anderen Punkt in $S$, der $\lfloor\frac{a}{2}\rfloor$ entfernt ist. Damit gibt es oberhalb und unterhalb von $S$ jeweils $\lfloor\frac{a}{2}\rfloor$ Reihen, die nicht mit Farbe 1 gefärbt werden dürfen. Nach diesem Schritt vereinfachen wir unser Gitter in Gedanken so, dass wir nur jeden $a_1$-ten Punkt betrachten. Dann gilt für jeden Punkt des vereinfachten Gitters, dass er nicht mit Farbe $1$ gefärbt werden darf, ohne dass ein oben beschriebenes Dreieck entsteht (siehe Abbildung \ref{figure41b}).
+Nun färben wir dieses vereinfachte Gitter mit Farben von $2$ bis $n$. Auch hier entsteht nach den gleichen Argumenten wie oben eine gewisse Anzahl an Reihen $b$, die nun nicht mit Farbe $2$ gefärbt werden dürfen. Der Abstand zwischen den einzelnen Punkten dieser Reihe sei, im vereinfachten Gitter $a_2$. 
+Außerdem bleiben noch $min(a-2,b-1)$ Reihen unterhalb der gerade gefärbten Reihe übrig, die weder mit Farbe $1$ noch mit Farbe $2$ gefärbt werden dürfen. Allerdings ist $b$ um einiges kleiner als $a$ ($a\ge a_2*b$), sodass die Anzahl der Reihen unterhalb der gerade gefärbten stets der Länge der gerade gefärbten Reihe minus eins entsprechen. Sollte $a_2=1$ sein, fügt man der ersten Reihe einfach noch genügend Punkte hinzu.
+Nach diesem Schema fahren wir fort, bis wir eine Reihe mit einer Länge von mindestens drei erhalten, die nur noch mit einer Farbe gefärbt werden darf. Dann entsteht ein $2*3$-Gitter, das nur mit einer Farbe gefärbt werden darf (siehe Abbildung \ref{figure41c}). Dieses Gitter enthält mindestens ein Dreieck, das die in der Aufgabenstellung geforderten Bedingungen erfüllt.
+Damit ist bewiesen, dass Satz \ref{satz4} für jedes natürliche $n$ gilt.
+\end{proof}
+s.d.g.
+
+\end{document}

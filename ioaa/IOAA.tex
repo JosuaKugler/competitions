@@ -1,0 +1,93 @@
+\documentclass{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{amsmath}
+\usepackage{tikz}
+
+\title{Internationale Astrophysik Olympiade 2019}
+\author{Josua Kugler}
+\begin{document}
+	\maketitle
+	\section{Aufgabe}
+	(1.) Die Venus dreht sich einfach deutlich langsamer um die eigene Achse als um die Sonne. Es gibt die Vermutung, dass die Kollision mit einem Asteroiden zu diesem Phänomen geführt hat.\\
+	(2.) Aufgrund des retrograden Drehsinns der Venus gilt für die Winkelgeschwindigkeit $\omega_{ges}$, dass sich die Winkelgeschwindigkeit der Rotation um die Sonne $\omega_{1}$ sowie die Winkelgeschwindigkeit der Rotation um die eigene Achse $\omega_{2}$ addieren. Sobald eine Drehung mit $\omega_{ges}$ vollendet wurde, ist ein Tag-Nacht-Zyklus der Venus beendet.
+	Es gilt:
+	\begin{align*}
+		T&=\frac{2\pi}{\omega_{ges}}\\
+		&=\frac{2\pi}{\omega_{1}+\omega_{2}}\\
+		&=\frac{2\pi}{\frac{2\pi}{T_1}+\frac{2\pi}{T_2}}\\
+		&=\frac{1}{\frac{1}{T_1}+\frac{1}{T_2}}\\
+		&=\frac{1}{\frac{1}{243,02d}+\frac{1}{224,70d}}\\
+		&=116.75d
+	\end{align*}
+	\section{Aufgabe}
+	Wir setzen zunächst
+	\begin{align*}
+		F_G&=F_Z\\
+		G*\frac{m*M}{r^2}&=\frac{m*v^2}{r}\\
+		v^2&=\frac{G*M}{r}
+	\end{align*}
+	Laut dem Satz von Vis-Visa gilt mit $a$ als großer Halbachse und $M'$ als Sonnenmasse nach der Änderung:
+	\[v^2=G(M'+m)\left(\frac{2}{r}-\frac{1}{a}\right)\]
+	Gleichsetzen ergibt (unter Vernachlässigung der Erdmasse gegenüber der Sonnenmasse):
+	\begin{align*}
+		\frac{G*M}{r}&=GM'\left(\frac{2}{r}-\frac{1}{a}\right)\\
+		\frac{M}{M'}&=2-\frac{r}{a}\\
+		\frac{r}{a}&=\frac{2M'}{M'}-\frac{M}{M'}\\
+		\frac{a}{r}&=\frac{M'}{2M'-M}
+	\end{align*}
+	(1.) Für $M'=2M$ erhalten wir: \[\frac{a}{r}=\frac{2}{3}\]
+	Die große Halbachse hat also die Größe von $\frac{2}{3}\mathrm{AE}$.
+	Die Bahnumlaufzeit erhalten wir über das dritte Keplersche Gesetz (wieder unter Vernachlässigung der Erdmasse):
+	\[\frac{T^2}{T_0^2}=\frac{a^3}{r^3}*\frac{M'}{M}\]
+	\[T=\sqrt{\frac{2*a^3}{r^3}}*T_0=\sqrt{\frac{16}{27}}*T_0=\frac{4}{9}*\sqrt{3}*T_0\]
+	Das entspricht ca. 0.385 Jahren oder 140 Tagen.\\
+	(2.) Der größte Abstand dieser Bahn liegt bei $1\mathrm{AE}$, das ist der Abstand im Moment der Massenverdoppelung. Der kleinste Abstand der Bahn von der Sonne liegt diesem Punkt exakt gegenüber. Dieser Abstand beträgt $2*a-1\mathrm{AE}=0.5\mathrm{AE}$. Der Aphel der anderen Planeten bleibt, wie bei der Erde, näherungsweise gleich. Der Perihel der neuen Erdbahn liegt also näher an der Sonne als der Aphel der Venusbahn. Der Aphel der Merkurbahn liegt weiter innen und durchkreuzt die Umlaufbahn daher nicht. Unter Vernachlässigung der Exzentrizität der Marsbahn erhält man auch hier für das Perihel der neuen Bahn die Hälfte des alten Bahnradius. Damit liegt das Perihel der Marsbahn mit ca. $\frac{3}{4}\mathrm{AE}$ weiter innen als das Aphel der Erdbahn. Insgesamt werden also nach der Verdopplung der Sonnenmasse Venus und Mars die Erdbahn kreuzen.\\
+	(3.) Wir setzen $M'=\frac{M}{2}$
+	\[\frac{a}{r}=\frac{\frac{M}{2}}{2\frac{M}{2}-M}\]
+	Da $a\to\infty$, handelt es sich bei der neuen Erdbahn um eine Parabel. Die Erde ist also nicht mehr an die Sonne gebunden.
+	\section{Aufgabe}
+	\begin{minipage}{0.19\textwidth}
+	\begin{tikzpicture}
+		\draw (0,0) -- node[below] (ae) {1 AE} (1,0) -- node[right] (d) {d} (1,4) -- (0,0);
+		\draw (1,2.9) arc (270:240:0.5);
+		\node (sec) at (0.9,3.05) {\tiny 1''};
+	\end{tikzpicture}
+	\end{minipage}
+	\begin{minipage}{0.8\textwidth}
+	(1.) Für die Entfernung $d$ gilt:
+	\begin{align*}
+	tan(\frac{1^\circ}{3600})&=\frac{1\mathrm{AE}}{d}\\
+	d &= \frac{1\mathrm{AE}}{tan(\frac{1^\circ}{3600})}
+	\end{align*}
+	(2.) Die Entfernung lässt sich folgendermaßen berechnen
+	\begin{align*}
+		\frac{d}{\mathrm{pc}}&=\frac{\frac{1\mathrm{AE}}{tan(p)}}{\frac{1\mathrm{AE}}{tan(1'')}}\\
+		\frac{d}{\mathrm{pc}}&=\frac{tan(1'')}{tan(0.31'')}\\
+		d&=3.2 \mathrm{pc}
+	\end{align*}
+	\end{minipage}
+	(3.) Die maximale Reichweite erhält man damit, dass man die Entfernung eines Objektes mit Parallaxe $0.01''$ berechnet. Ein Objekt mit dieser Breite können wir noch auflösen.
+	\begin{align*}
+	\frac{d}{\mathrm{pc}}&=\frac{\frac{1\mathrm{AE}}{tan(p)}}{\frac{1\mathrm{AE}}{tan(1'')}}\\
+	\frac{d}{\mathrm{pc}}&=\frac{tan(1'')}{tan(0.01'')}\\
+	d&=100 \mathrm{pc}
+	\end{align*}
+	\section{Aufgabe}
+	Wir betrachten bei einer Kollision zweier Galaxien die Kollisionsfläche und projizieren alle Sterne auf diese Fläche. Diese Fläche hängt stark davon ab, wie genau die beiden Galaxien aufeinandertreffen. Da es sich sowohl bei der Andromedagalaxie als auch bei der Milchstraße um scheibenförmige Galaxien handelt, nehmen wir an, dass die beiden Scheiben mit der flachen Seite näherungsweise mittig aufeinandertreffen.
+	Dann erhalten wir eine Kollisionsfläche mit der Größe der Galaxie mit der kleineren Fläche. Wir nehmen für den Durchmesser der Milchstraße ca. 30000 pc an. $A_{\mathrm{Milchstraße}}=\pi R_{\mathrm{Milchstraße}}^2\approx 7*10^8\mathrm{pc}^2$. Nun betrachten wir die Anzahl der Sterne, die nach der Projektion auf die Kollisionsebene in einem $\mathrm{pc}^2$ liegen. Dazu dividieren wir die Anzahl der Sterne der Galaxie durch die Gesamtfläche. Bei der Milchstraße erhalten wir somit ca. $\frac{10^11}{7*10^8\mathrm{pc}^2}\approx150$.
+	Bei einem durchschnittlichen Sternradius von ungefähr dem Sonnenradius, also $2.25*10^{-8} pc$ beträgt die projizierte Fläche eines Sterns ca. $1.6*10^{-15} \mathrm{pc}^2$ Damit erhält man für das Verhältnis von mit Sternen bedeckter Fläche zu nicht bedeckter Fläche $150*1.6*10^{-15} \approx 2.4*10^{-13} \mathrm{pc}^2$. Nun betrachten wir einen beliebigen Stern der Andromedagalaxie. Die Wahrscheinlichkeit, dass er mit einem Stern der Milchstraße kollidiert, beträgt $2.4*10^{-13}$. Demnach beträgt die Wahrscheinlichkeit, dass er nicht mit einem Stern der Milchstraße kollidiert $1-2.4*10^{-13}$. Wir betrachten nur die Sterne der Andromedagalaxie, die überhaupt im Abstand des Milchstraßenradius vom Kollisionszentrum liegen. Da die Andromedagalaxie ca. 10 mal mehr Sterne und einen ca. 1,5 mal so großen Radius hat, beträgt die Anzahl dieser Sterne das $\frac{10}{1.5^2}\approx4.5$-fache der Sterne von der Milchstraße. Die Wahrscheinlichkeit, dass keiner dieser Sterne aus der Andromedagalaxie mit einem Stern der Milchstraße kollidiert, beträgt also $\left(1-2.4*10^{-13}\right)^{4.5*10^11} \approx 0.9$.
+	Daraus folgt, dass es mit Wahrscheinlichkeit $0.1$ mindestens eine Kollision zweier Sterne gibt.
+	\section{Aufgabe}
+	\begin{enumerate}
+		\item Die Beobachtung erfolgt in Richtung Südwesten.
+		\item Sternbilder:
+		\subitem Orion $\to$ Beteigeuze
+		\subitem Canis maior $\to$ Sirius
+		\subitem Lepus $\to$ Arneb
+		\subitem Aries $\to$ Hamal
+		\item Sirius
+		\item Mars
+	\end{enumerate}
+\end{document}

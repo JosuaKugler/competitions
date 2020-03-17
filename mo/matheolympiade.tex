@@ -1,0 +1,202 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[ngerman]{babel}
+\usepackage[left=2cm,top=2cm,bottom=2cm]{geometry}
+\usepackage{amsmath,amssymb,amstext,amsfonts,amsthm}
+\usepackage[fleqn,tbtags]{mathtools}
+\usepackage{tikz}
+\usetikzlibrary{angles, quotes, babel}
+\usepackage{subcaption}
+\newtheorem{lemma}{Lemma}
+\usepackage{enumitem}
+
+\title{58. Matheolympiade\\1. Runde\\Klassen 11 und 12}
+\author{Josua Kugler}
+\begin{document}
+	\maketitle
+	\section{Aufgabe 581211}
+	Man bestimme die kleinstmögliche Quersumme einer durch 37 teilbaren positiven ganzen Zahl.
+	\begin{proof}
+	Offensichtlich gibt es durch 37 teilbare Zahlen mit der Quersumme drei, z.B. 111.
+	Gesucht ist also eine durch 37 teilbare Zahl, die eine Quersumme kleiner als drei besitzt.
+	\subsection{Annahme: Es gibt eine durch 37 teilbare Zahl mit der Quersumme eins}
+	\label{annahme1}
+	Eine Zahl mit der Quersumme eins besteht aus einer eins und ansonsten nur Nullen.
+	Nullen, die links von der eins stehen, werden sowieso nicht berücksichtigt.
+	Da Nullen, die rechts von der eins stehen, entfernt werden können, indem durch zehn geteilt wird und die Teilung durch zehn keinen Einfluss auf die Teilbarkeit durch 37 hat, müssen diese ebenfalls nicht berücksichtigt werden. Übrig bleibt eine eins, die trivialerweise nicht durch 37 teilbar ist.
+	Damit ist unsere Annahme ad absurdum geführt.
+	\subsection{Annahme: Es gibt eine durch 37 teilbare Zahl mit der Quersumme zwei}
+	\label{annahme2}
+	Hierfür gibt es zwei Möglichkeiten:
+	\paragraph{Die Zahl besteht aus einer zwei und ansonsten Nullen}
+	Analog zu Annahme \ref{annahme1} lässt sich eine solche Zahl ohne Veränderung der Teilbarkeit durch 37 auf eine zwei reduzieren, die nicht durch 37 teilbar ist.
+	\paragraph{Die Zahl besteht also aus zwei Einsen und ansonsten Nullen}
+	Analog zu \ref{annahme1} können wir alle Nullen links der linken Eins sowie alle Nullen rechts der rechten Eins streichen, ohne damit die Teilbarkeit durch 37 zu beeinflussen. Wir erhalten also eine Zahl der Form $10^a+1$.
+	\begin{lemma}
+		\label{lemma1}
+		Für jede Zahl der Form $10^n+1$ gilt mit $n,k\in \mathbb{N}$ und $n-3*k \ge 0$:
+		\[10^n+1\equiv 10^{n-3*k}+1\]
+	\end{lemma}
+	\begin{proof}
+		Es gilt:
+			\[37\mid 111\ \to\ 37\mid 111*m \]
+		Daraus folgt:
+		\begin{align*}
+			10^n+1&\equiv 10^n+1-111*10^{n-2}+111*10^{n-3}&&\mathrm{mod}\ 37\\
+			&\equiv 10^n+1-\left(100*10^{n-2}+10*10^{n-2}+1*10^{n-2}\right) + \left(100*10^{n-3}+10*10^{n-3}+1*10^{n-3}\right)&&\mathrm{mod}\ 37\\
+			&\equiv 10^n+1-\left(10^{n}+10^{n-1}+10^{n-2}\right) + \left(10^{n-1}+10^{n-2}+10^{n-3}\right)&&\mathrm{mod}\ 37\\
+			&\equiv 10^n+1-10^{n}-10^{n-1}-10^{n-2}+10^{n-1}+10^{n-2}+10^{n-3}&&\mathrm{mod}\ 37\\	
+			&\equiv 10^n-10^n-10^{n-1}+10^{n-1}-10^{n-2}+10^{n-2}+10^{n-3}+1&&\mathrm{mod}\ 37\\
+			10^n+1&\equiv 10^{n-3}+1&&\mathrm{mod}\ 37		
+		\end{align*}
+		Diese Kongruenz gilt natürlich nur für $n-3\ge 0\ \to\  n\ge 3$.
+		Wendet man sie $k$ mal auf eine Zahl $10^n+1$ an, so erhält man \[10^n+1\equiv 10^{n-3*k}+1\]
+	\end{proof}
+	
+	Nun benutze man Lemma \ref{lemma1} so oft für eine Zahl $10^n+1$, bis gilt: $n<3$.
+	Auf jede Zahl $10^n+1$ mit $n\ge 3$ kann man das Lemma noch mindestens einmal anwenden.
+	($10^{3+a}+1\equiv 10^{a}+1\hspace{2cm}\mathrm{mod}\ 37$ mit $a\ge 0$)\\
+	Wir müssen also nur noch alle Zahlen $10^n+1$ mit $n<3$ betrachten, also $10^2+1$, $10^1+1$ und $10^0+1$.
+	\begin{align*}
+		&10^2+1=101\equiv 27 \not\equiv 0&&\mathrm{mod}\ 37\\
+		&10^1+1=11\equiv 11 \not\equiv 0&&\mathrm{mod}\ 37\\
+		&10^0+1=2\equiv 2 \not\equiv 0&&\mathrm{mod}\ 37\\
+	\end{align*}
+	Damit ist auch Annahme \ref{annahme2} ad absurdum geführt.
+	Es gibt also weder durch 37 teilbare Zahlen mit der Quersumme eins noch mit der Quersumme zwei. Zahlen mit kleinerer Quersumme werden laut Aufgabenstellung (bzw. per Definition der Quersumme) nicht gesucht.
+	Damit ist die kleinste Quersumme einer durch 37 teilbaren positiven Zahl drei. Dass es Zahlen mit dieser Quersumme gibt, beweist das Beispiel 111.\\
+\end{proof}
+\section{Aufgabe 581212}
+Ein Dreieck $ABC$ sei spitzwinklig und gleichschenklig mit $|BC|\ =\ |CA|$. Die Fußpunkte der Höhen von $B$ und $C$ auf die jeweils gegenüberliegenden Dreiecksseiten $CA$ und $AB$ werden mit $E$ beziehungsweise $F$ bezeichnet. Der Schnittpunkt der Höhen $CF$ und $BE$ sei $H$, vgl. Abbildung \ref{dreieckaufgabenstellung}.
+Wie groß ist der Flächeninhalt des Vierecks $HEAF$, wenn die Längen $|CE|\ =\ 5$ und $|EA|\ =\ 8$ bekannt sind?
+\begin{figure}[h!]
+\begin{subfigure}{0.49\textwidth}	
+\begin{tikzpicture}[scale=.5]
+	\coordinate (A) at (0,0);
+	\coordinate (B) at (8,0);
+	\coordinate (C) at (4,7);
+	\coordinate (E) at (2.5,4.375);
+	\coordinate (F) at (4,0);
+	\coordinate (H) at (4,3.6);
+	\draw (A)--(B) node[right]{$B$};
+	\draw (B)--(C) node[above]{$C$};
+	\draw (C)--(A) node[left]{$A$};
+	\draw (C)--(H) node[right]{$G$};
+	\draw (H)--(F) node[below]{$F$};
+	\draw (B)--(E) node[left]{$E$};
+\end{tikzpicture}
+\subcaption{Dreieck wie in der Aufgabenstellung}
+\label{dreieckaufgabenstellung}
+\end{subfigure}
+\begin{subfigure}{0.49\textwidth}
+	\begin{tikzpicture}[scale=.5]
+	\coordinate (A) at (0,0);
+	\coordinate (B) at (8,0);
+	\coordinate (C) at (4,7);
+	\coordinate (D) at (5.5,4,375);
+	\coordinate (E) at (2.5,4.375);
+	\coordinate (F) at (4,0);
+	\coordinate (H) at (4,3.6);
+	\draw (A)--(B) node[right]{$B$};
+	\draw (B)--(C) node[above]{$C$};
+	\draw (C)--(A) node[left]{$A$};
+	\draw (C)--(H) node[right]{$H$};
+	\draw (H)--(F) node[below]{$F$};
+	\draw (B)--(E) node[left]{$E$};
+	\path (B) -- (F) -- (C) pic[".", draw, angle radius = 0.5cm] {angle=B--F--C};
+	\end{tikzpicture}
+	\subcaption{Dreieck mit Hilfslinien und -winkeln}
+\end{subfigure}
+\caption{Zwei Dreiecke}
+\end{figure}
+Da das Dreieck $ABC$ gleichseitig ist, gilt mit $|CE|\ =\ 5$ und $|EA|\ =\ 8$:\[|CB|\ =\ |AC|\ =\ |CE|\ +\ |EA|\ =\ 5+8\ =\ 13\]
+Das Dreieck $DBC$ besitzt einen rechten Winkel bei $D$. Mit dem Satz des Pythagoras gilt also:
+\[|DB|\ =\ \sqrt{|CB|^2-|EC|^2}\ =\ \sqrt{13^2-5^2}\ =\ \sqrt{144}\ =\ 12\]
+Daraus folgt:
+\[|AB|\ =\ \sqrt{|AE|^2+|EB|^2}\ =\ \sqrt{8^2+12^2}\ =\ \sqrt{208}\ =\ 4\sqrt{13}\]
+Der Lotfußpunkt von $E$ auf $AB$ sei $G$.
+Dann gilt:
+\[A_{ABE}\ =\ |AE|*|EB|\ =\ |EG|*|AB|\]
+Mit Umformen ergibt sich:
+\[|EG|\ =\ \frac{|AE|*|EB|}{|AB|}\ =\ \frac{96}{4*\sqrt{13}}\]
+Da die Dreiecke $AGE$ und $AFC$ ähnlich sind, gilt mit Strahlensätzen:
+\[\frac{|AG|}{|AF|}\ =\ \frac{|AE|}{|AC|}\]
+Daraus folgt für $|AG|$:
+\[|AG|\ =\ \frac{|AE|*|AF|}{|AC|}\ =\ \frac{8}{13}\frac{|AB|}{2}\ =\ \frac{16\sqrt{13}}{13}\]
+Die Dreiecke $GBE$ und $FBH$ sind ebenfalls ähnlich. Mit Strahlensätzen und Multiplikation mit $|FB|$  erfolgt:
+\[|FH|\ =\ \frac{|EG|}{|GB|}|FB|\ =\ \frac{|EG|}{|AB|-|AG|}\frac{|AB|}{2}\\
+=\ \frac{\frac{96}{4*\sqrt{13}}}{4\sqrt{13}-\frac{16\sqrt{13}}{13}}*2\sqrt{13}\ =\ \frac{48}{\frac{52\sqrt{13}-16\sqrt{13}}{13}}\\
+=\ \frac{48*13}{36*\sqrt{13}}\ =\ \frac{4}{3}\sqrt{13}\]
+Für den gesuchten Flächeninhalt des Vierecks $HEAF$ gilt:
+\[A_{HEAF}\ =\ A_{ABE}-A_{FBH}\ =\ |AE|*|EB|-|BF|*|HB|\ =\ 96-\frac{4}{3}\sqrt{13}*\frac{4\sqrt{13}}{2}\ =\ 96-\frac{8*13}{3}\ =\ \frac{104}{3}\]
+Die Lösung lautet: \[A_{HEAF}\ =\ \frac{104}{3}\]
+
+\section{Aufgabe 581213}
+Auf einem Schachbrett mit 8 $\times$ 8 Feldern bedroht ein Turm alle Schachfiguren, die in der
+gleichen Zeile oder der gleichen Spalte stehen wie er selbst, unabhängig davon, ob ein weiterer
+Turm dazwischen steht oder nicht.\\
+Wie viele Türme können auf dem Schachbrett maximal so platziert werden, dass jeder Turm
+höchstens zwei weitere Türme bedroht?
+
+In einer Reihe bzw. einer Spalte können stets höchstens drei Türme stehen, da bei vier Türmen jeder Turm dieser Reihe oder Spalte drei andere Türme bedrohen würde.
+
+Es können maximal 16 Türme mit den genannten Bedingungen positioniert werden.
+\begin{proof}
+	\begin{figure}
+		\begin{tikzpicture}
+		\draw[help lines] (0,0) grid (8,8);
+		\foreach \x in {0,1,...,7} \draw[fill,color=blue] (\x+0.5,\x+0.5) circle[radius=2pt];
+		\foreach \x in {0,1,...,7} \draw[fill,color=blue] (\x+0.5,8-\x-0.5) circle[radius=2pt];	
+		\end{tikzpicture}
+	\end{figure}
+\end{proof}
+
+\section{Aufgabe 581214}
+Gesucht sind alle Paare $(x, y)$ reeller Zahlen, die das folgende Gleichungssystem erfüllen:
+\begin{align}
+x^2 + ay &= a,\\
+x + a^2y^2 &= a.
+\end{align}
+\begin{enumerate}[label=\alph*)]
+	\item Für a = 1 bestimme man alle Lösungspaare (x, y).
+	\item Man bestimme für jede beliebige reelle Zahl a die Anzahl der verschiedenen Lösungspaare
+	und gebe diese an.
+\end{enumerate}
+\begin{enumerate}[label=\alph*)]
+	\item \[\mathbb{L} = (0,1) , (1,0) , (\frac{-1+\sqrt{5}}{2}) , (1,2)\]
+\end{enumerate}
+
+\begin{proof}[a)]
+	Für $a=1$ gilt Folgendes:
+	\begin{align*}
+	x^2+y&=1&&\left|-x^2\right.\\
+	y&=1-x^2&&\left|\mathrm{Einsetzen\ in\ }x+y^2=1\right.\\
+	x+\left(1-x^2\right)^2&=1&&\left|\text{Bei diesem Schritt wird quadriert, die Lösungen müssen also nachher überprüft werden}\right.\\
+	x+1-2x^2+x^4-1&=0\\
+	x^4-2x^2+x&=0
+	\end{align*}
+	Aus diesem Term folgt für die erste Nullstelle $x_1 = 0$. Wir teilen den gesamten Term durch $x$ und erhalten $x^3-2x^1+1=0$.
+	Durch Ausprobieren erhält man für die zweite Nullstelle: $x_2=1$.
+	Wir führen Polynomdivision durch:
+	\begin{align*}
+		x^3+0x^2&-2x+1/(x-1)=x^2+x-1\\
+		-(x^3-1x^2&)\\
+		x^2&-2x\\
+		-(x^2&-x)\\
+		&-x+1\\
+		&-(x-1)
+	\end{align*}
+	Wir wenden nun die p-q-Formel an:\\
+	\begin{align*}
+		x_{3,4}&=\frac{1}{2}\pm\sqrt{\frac{1}{4}+1}\\
+		&=\frac{1\pm\sqrt{5}}{2}\\
+		x_3&=\frac{1+\sqrt{5}}{2}\\
+		x_4&=\frac{1-\sqrt{5}}{2}\\
+	\end{align*}
+	Nun setzen wir die einzelnen Lösungen in die Gleichung ein.
+	Dabei erhalten wir:
+	
+\end{proof}
+
+\end{document}

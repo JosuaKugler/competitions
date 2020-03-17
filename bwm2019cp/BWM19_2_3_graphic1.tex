@@ -1,0 +1,59 @@
+\definecolor{wrwrwr}{rgb}{0.3803921568627451,0.3803921568627451,0.3803921568627451}
+\definecolor{rvwvcq}{rgb}{0.08235294117647059,0.396078431372549,0.7529411764705882}
+\begin{tikzpicture}[line cap=round,line join=round,>=triangle 45,x=1cm,y=1cm]
+\begin{axis}[
+x=10cm,y=10cm,
+axis lines=middle,
+xmin=-0.1,
+xmax=1.1,
+ymin=-0.1,
+ymax=1.0,
+xtick={0,0.2,...,1},
+ytick={0,0.2,...,0.8},]
+\clip(-0.1,-0.3) rectangle (1.1,0.9);
+\fill[line width=1.5pt,color=rvwvcq,fill=rvwvcq,fill opacity=0.10000000149011612] (0,0) -- (1,0) -- (0.88,0.6472727272727266) -- cycle;
+\draw [line width=1pt,color=rvwvcq] (0,0)-- (1,0);
+\draw [line width=1pt,color=rvwvcq] (1,0)-- (0.88,0.6472727272727266);
+\draw [line width=1pt,color=rvwvcq] (0.88,0.6472727272727266)-- (0,0);
+\draw [line width=1pt,color=wrwrwr,domain=-0.5503529113306096:2.1036332092992214] plot(\x,{(--0.58024029660708-0.9299012942401864*\x)/-0.36780916651223705});
+\draw [line width=1pt,color=wrwrwr] (0.7170543688144491,0.23531085376355546) circle (2.3531085376355526cm);
+\draw [line width=1pt,color=wrwrwr] (0.88,-0.8213388625949122) -- (0.88,1.1118805010638608);
+\draw [line width=1pt,color=wrwrwr,domain=-0.5503529113306096:2.1036332092992214] plot(\x,{(--0.3236363636363633-0.6472727272727266*\x)/-0.38});
+\draw [line width=1pt,color=wrwrwr,domain=-0.5503529113306096:2.1036332092992214] plot(\x,{(-0.10817423077492438--0.21634846154984877*\x)/-0.017491203687925894});
+\draw [line width=1pt,color=wrwrwr] (0.7170543688144491,-0.8213388625949122) -- (0.7170543688144491,1.1118805010638608);
+
+%\draw [line width=1pt,color=wrwrwr] (0.5,0) circle (2.1705436881444912cm);
+\begin{scriptsize}
+\coordinate (A) at (0,0);
+\draw [fill=rvwvcq] (A) circle (2.5pt);
+\draw[color=rvwvcq] (0.0223493568053013,0.06006389641425378) node {$A$};
+\coordinate (B) at (1,0);
+\draw [fill=rvwvcq] (B) circle (2.5pt);
+\draw[color=rvwvcq] (1.0224830738426482,0.06006389641425378) node {$B$};
+\coordinate (C) at (0.88,0.6472727272727266);
+\draw [fill=rvwvcq] (C) circle (2.5pt);
+\draw[color=rvwvcq] (0.9123552810141401,0.658195243768062) node {$C$};
+\coordinate (D) at (0.7170543688144491,0.23531085376355546);
+\draw [fill=wrwrwr] (D) circle (2pt);
+\draw[color=wrwrwr] (0.7503224441756873,0.23914480366861706) node {$D$};
+\coordinate (M) at (0.5,0);
+\draw [fill=wrwrwr] (M) circle (2pt);
+\draw[color=wrwrwr] (0.4724162153239748,0.05447655721292785) node {$M$};
+\coordinate (L) at (0.88,0);
+\draw [fill=wrwrwr] (L) circle (2pt); 
+\draw[color=wrwrwr] (0.9023552810141401,0.05447655721292785) node {$L$};
+\coordinate (T) at (0.4825087963120741,0.21634846154984877);
+\draw [fill=wrwrwr] (T) circle (2pt);
+\draw[color=wrwrwr] (0.5156541977199969,0.23958911646397626) node {$T$};
+\coordinate (W) at (0.6239805237406287,0);
+\draw [fill=wrwrwr] (W) circle (2pt);
+\draw[color=wrwrwr] (0.6053376777531459,0.05447655721292785) node {$W$};
+\coordinate (F) at (0.717054368814449,0);
+\draw [fill=wrwrwr] (F) circle (2pt);
+\draw[color=wrwrwr] (0.7403224441756873,0.05447655721292785) node {$F$};
+\draw [line width=1pt,color=wrwrwr] (T) -- (D);
+\path (D) -- (F) -- (W) pic[".", draw, wrwrwr, angle radius = 0.5cm] {angle=D--F--W};
+\path (M) -- (T) -- (D) pic[".", draw, wrwrwr, angle radius = 0.5cm] {angle=M--T--D};
+\end{scriptsize}
+\end{axis}
+\end{tikzpicture}

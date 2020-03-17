@@ -1,0 +1,202 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[ngerman]{babel}
+
+\usepackage{amsmath,amssymb,amstext,amsthm}
+\usepackage[fleqn,tbtags]{mathtools}
+\numberwithin{equation}{section}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\rhead{Brunner, Kugler}
+\usepackage{subcaption}
+\usepackage{tikz,pgf,pgfplots}
+\usetikzlibrary{angles,quotes,babel,arrows,intersections,positioning}
+\pgfplotsset{compat=1.15}
+\usepackage{mathrsfs}
+\newcommand{\degre}{\ensuremath{^\circ}}
+\newtheorem{df}{Definition}
+\newtheorem{satz}{Satz}
+\newtheorem{lemma}{Lemma}
+\newtheorem{fakt}{Fakt}
+\newtheorem{korollar}{Korollar}
+\newcommand{\RM}[1]{\MakeUppercase{\romannumeral #1{.}}}
+%\newcommand{\winkel}{30}
+
+\title{Bundeswettbewerb Mathematik 2019 Runde 1}
+\author{Julian Brunner und Josua Kugler}
+
+\begin{document}
+	\maketitle
+	\newpage
+	\section{Aufgabe}
+	Wir versuchen, eine Anordnung zu konstruieren, bei der es keine zwei Dominosteine gibt, die ein 2x2 Quadrat bilden.
+	O.b.d.A. sei der erste Stein links oben in der Ecke mit der längeren Seite zur oberen Kante des Schachbrettes ausgerichtet (siehe Abbildung \ref{anfang1}).
+	\begin{figure}
+		\begin{subfigure}{0.33\textwidth}
+			\include{figures/A1_fig1}
+			\subcaption{Anfangsanordnung, andere A1 bedeckende Anordnungen sind symmetrisch}
+			\label{anfang1}
+		\end{subfigure}
+		\begin{subfigure}{0.33\textwidth}
+			\include{figures/A1_fig2}
+			\subcaption{Einzige Möglichkeit, einen Stein auf B2 hinzulegen}
+			\label{b21}
+		\end{subfigure}
+		\begin{subfigure}{0.32\textwidth}
+			\include{figures/A1_fig3}
+			\subcaption{Hier muss es ein 1x2-Quadrat mit zwei Dominosteinen entstehen}
+			\label{ende1}
+		\end{subfigure}
+	\end{figure}
+	Wir betrachten nun Feld B2. Der Dominostein muss an dieser Stelle vertikal ausgerichtet sein, da ansonsten ein Quadrat aus zwei Dominosteinen entsteht (siehe Abbildung \ref{b21}).\\
+	Der Feld B2 bedeckende Dominostein muss horizontal ausgerichtet sein, da ansonsten ein Quadrat aus zwei Dominosteinen entsteht. Wird nach diesem Schema weiterverfahren, so erhält man Diagramm \ref{ende1}.
+	An dieser Stelle muss nun ein Quadrat aus zwei Dominosteinen entstehen, es gibt also keine Anordnung der Dominosteine ohne ein solches Quadrat.
+	\newpage
+	\section{Aufgabe}
+	Die Dezimaldarstellung $SCHLAF$ wird nun umgeformt zu $S*10^5+C*10^4+H*10^3+L*10^2+A*10+F$. Analog wird $FLACHS$ zu $F*10^5+L*10^4+A*10^3+C*10^2+H*10+S$ umgeformt.
+	O.b.d.A. sei $SCHLAF>FLACHS$. Dann gilt für die Differenz der beiden Zahlen 
+	\begin{align*}
+		&SCHLAF-FLACHS\\
+		=&S*10^5+C*10^4+H*10^3+L*10^2+A*10+F\\&-(F*10^5+L*10^4+A*10^3+C*10^2+H*10+S)\\
+		=&(S-F)*10^5-(S-F)*1+(C-L)*10^4-(C-L)*10^2\\&+(H-A)*10^3-(H-A)*10\\
+		=&(S-F)*99999+(C-L)*(10^4-10^2)+(H-A)*(10^3-10)\\
+		=&(S-F)*99999+(10*(C-L)+(H-A))*11*10*9\\
+		=&(S-F)*271*369+\underbrace{(10*(C-L)+(H-A))}_{\text{zweistellig}}*11*5*3^2*2
+	\end{align*}
+	Der Teil vor dem Plus lässt sich stets durch 271 teilen, wie aus den Umformungen eindeutig ersichtlich wird.
+	Da 271 eine Primzahl ist, lässt sich der zweite Teil nur dann durch 271 teilen, wenn 271 Teil der Primfaktorzerlegung ist oder der zweite Teil 0 wird. Da alle Faktoren kleiner als 271 sind, muss der gesamte zweite Teil 0 werden, damit sich die Summe aus Teil 1 und Teil 2 durch 271 teilen lässt.
+	$SCHLAF-FLACHS$ ist also genau dann durch 271 teilbar, wenn der zweite Teil 0 wird, also $C=L$ und $H=A$.
+	\newpage
+	\section{Aufgabe}
+	Ein beliebiger Punkt $P$ habe die Koordinaten $P(x_P|y_P)$. Eine Gerade durch zwei Punkte $P$ und $Q$ heiße $g_{PQ}: y = m_{PQ}*x+c_{PQ}$. Die Länge einer Strecke von $P$ nach $Q$ sei $|PQ|$.
+	Wir legen O.b.d.A. ein Koordinatensystem fest, sodass die Punkte an folgenden Stellen liegen (siehe Abbildung \ref{skizze3}):
+	\[A(0|0), B(2|0), C(2|2), D(0|2)\]
+	Zudem heiße der Winkel $DAE$ $\alpha$.
+	Die Gerade $g_{AE}$ hat die Geradengleichung $y = m_{AE}*x$ mit $m_{AE}=tan(\alpha)$. Für $g_{AF}$ gilt analog: $y = tan(\alpha+45^{\circ})*x$.
+	Damit erhält man die Punkte $E(2|2tan(\alpha))$ und $F(\dfrac{2}{tan(\alpha+45^{\circ})}|2)$.
+	Für die Punkte $H$ und $G$ gilt, dass sie auf einem Kreis mit Mittelpunkt $(1|1)$ und Radius $\sqrt{2}$ liegen. Für sie gilt also:
+	\begin{figure}
+		\begin{tikzpicture}[scale=2]
+		\pgfmathsetmacro{\w}{25}
+		\pgfmathsetmacro{\r}{sqrt(2)}
+		\coordinate (A) at (0,0);
+		\coordinate (B) at (2,0);
+		\coordinate (C) at (2,2);
+		\coordinate (D) at (0,2);
+		\coordinate (eprojektion) at (\w:3);
+		\coordinate (fprojektion) at (\w+45:3);
+		
+		\draw[->] (A) -- (0,3);
+		\draw[->] (A) -- node[pos = .16,above] {$\alpha$} (3,0);
+		\draw (0.7,0) arc (0:\w:0.7);
+		\draw[name path=g1] (A) -- (eprojektion);
+		\draw[name path=g2] (A) -- (fprojektion);
+		\draw (A) node[below left] {A} rectangle (C) node [above right] {C};
+		\path[name path=upwards] (B) node[below right] {B}--(C)--(D) node[above left] {D};
+		\draw[name path=circle] (1,1) circle (\r);
+		\path[name intersections={of=g1 and upwards, by=E}];
+		\path[name intersections={of=g2 and upwards, by=F}];
+		\path[name intersections={of=g1 and circle, by=G}];
+		\path[name intersections={of=g2 and circle, by=H}];
+		
+		\draw (E)node[below right]{E}--(F) node[above left] {F};
+		\draw (G)node[below right]{G}--(H) node[above left] {H}; 
+		\end{tikzpicture}
+		\caption{Skizze gemäß Aufgabentext}
+		\label{skizze3}
+	\end{figure}
+	\begin{align*}
+		(x-1)^2+(y-1)^2&=2\\
+		x^2-2x+1+y^2-2y+1&=2\\
+		x^2-2x+y^2-2y&=0
+	\end{align*}
+	Nun berechnen wir die Schnittpunkte von $AG=AE$ und dem Kreis.
+	\begin{align*}
+		y&=tan(\alpha)*x\\
+		0&=x^2-2x+(tan(\alpha)*x)^2-2*tan(\alpha)*x\\
+		0&=x*(x-2+tan(\alpha)^2*x-2tan(\alpha))\\
+		\intertext{x=0 ist eine bereits bekannte Lösung}
+		0&=x-2+tan(\alpha)^2*x-2tan(\alpha)\\
+		(tan(\alpha)^2+1)*x&=2+2tan(\alpha)\\
+		x&=\dfrac{2+2tan(\alpha)}{tan(\alpha)^2+1}\\
+		x&=\dfrac{2+2\frac{sin(\alpha)}{cos(\alpha)}}{1+\frac{sin(\alpha)^2}{cos(\alpha)^2}}&&\left|*\frac{cos(\alpha)^2}{cos(\alpha)^2}\right.\\
+		x&=\dfrac{2cos(\alpha)^2+2sin(\alpha)*cos(\alpha)}{sin(\alpha)^2+cos(\alpha)^2}\\
+		x&=2cos(\alpha)*(sin(\alpha)+cos(\alpha))
+	\end{align*}
+	\begin{align*}
+		\intertext{Analog gilt für den Schnittpunkt von $AH=AF$ und dem Kreis}
+		x&=2cos(\alpha+45^{\circ})*(sin(\alpha+45^{\circ})+cos(\alpha+45^{\circ}))\\
+		\intertext{Mit den Additionstheoremen erhalten wir}
+		x&=2*(cos(\alpha)*cos(45^{\circ})-sin(\alpha)*sin(45^{\circ}))\\
+		&*(cos(\alpha)*cos(45^{\circ})-sin(\alpha)*sin(45^{\circ})+sin(\alpha)*sin(45^{\circ})+cos(\alpha)*cos(45^{\circ}))\\
+		x&=2*(cos(\alpha)*\frac{\sqrt{2}}{2}-sin(\alpha)*\frac{\sqrt{2}}{2})*(2*cos(\alpha)*\frac{\sqrt{2}}{2})\\
+		x&=2cos(\alpha)*(cos(\alpha)-sin(\alpha))
+	\end{align*}
+	Für die $y$-Koordinate von $G$ gilt: $y = tan(\alpha)*x = \frac{\sin(\alpha)}{cos(\alpha)}$.
+	Damit erhalten wir Punkt \[G\left(2cos(\alpha)*(sin(\alpha)+cos(\alpha))\left|2sin(\alpha)*(sin(\alpha)+cos(\alpha))\right.\right)\]
+	Für die $y$-Koordinate von $H$ gilt:
+	\begin{align*}
+	y &= tan(\alpha+45^{\circ})*x = \frac{\sin(\alpha+45^{\circ})}{cos(\alpha+45^{\circ})}*x\\
+	&= \frac{sin(\alpha)*sin(45^{\circ})+cos(\alpha)*cos(45^{\circ})}{cos(\alpha)*cos(45^{\circ})-sin(\alpha)*sin(45^{\circ})}*x\\ 
+	&= \frac{sin(\alpha)+cos(\alpha)}{cos(\alpha)-sin(\alpha)}*x\\ 
+	&= \frac{sin(\alpha)+cos(\alpha)}{cos(\alpha)-sin(\alpha)}*2cos(\alpha)*(cos(\alpha)-sin(\alpha)) \\
+	&= 2cos(\alpha)*(cos(\alpha)+sin(\alpha))
+	\end{align*}
+	Damit erhalten wir außerdem Punkt \[H\left(2cos(\alpha)*(cos(\alpha)-sin(\alpha))\left|2cos(\alpha)*(cos(\alpha)+sin(\alpha))\right.\right)\]
+	Nun berechnen wir die Steigungen der Geraden $EF$ und $GH$.
+	Zu zeigen: 
+	\[m_{EF}=\frac{y_E-y_F}{x_E-x_F} = m_{GH}=\frac{y_G-y_H}{x_G-x_H}\]
+	Zunächst berechnen wir $m_{EF}$ mit $E(2|2tan(\alpha)=2\frac{sin(\alpha)}{cos(\alpha)})$ und $F(\frac{2}{tan(\alpha+45^{\circ})}|2)$ und mit der oben erhaltenen Identität $tan(\alpha+45^{\circ})=\frac{sin(\alpha)+cos(\alpha)}{cos(\alpha)-sin(\alpha)}$ ergibt sich der Punkt zu $F(2\frac{cos(\alpha)-sin(\alpha)}{sin(\alpha)+cos(\alpha)}|2)$
+	\begin{align*}
+		m_{EF}&=\frac{y_E-y_F}{x_E-x_F}=\frac{2\frac{sin(\alpha)}{cos(\alpha)}-2}{2-2\frac{cos(\alpha)-sin(\alpha)}{sin(\alpha)+cos(\alpha)}}&&\left|\frac{0.5cos(\alpha)*(sin(\alpha+cos(\alpha))}{0.5cos(\alpha)*(sin(\alpha)+cos(\alpha))}\right.\\
+		&=\frac{(sin(\alpha)+cos(\alpha))*(sin(\alpha)-cos(\alpha))}{cos(\alpha))*(sin(\alpha)+cos(\alpha))-cos(\alpha)(cos(\alpha)-sin(\alpha)}\\
+		&=\frac{sin(\alpha)^2-cos(\alpha)^2}{2*cos(\alpha)*sin(\alpha)}
+	\end{align*}
+	Nun berechnen wir $m_{GH}$.
+	\begin{align*}
+		m_{GH}&=\frac{y_G-y_H}{x_G-x_H}\\
+		&=\frac{2sin(\alpha)*(sin(\alpha)+cos(\alpha))-2cos(\alpha)*(cos(\alpha)+sin(\alpha))}{2cos(\alpha)*(sin(\alpha)+cos(\alpha))-2cos(\alpha)*(cos(\alpha)-sin(\alpha))}\\
+		&=\frac{(sin(\alpha)-cos(\alpha))*(sin(\alpha)+cos(\alpha))}{cos(\alpha)*(sin(\alpha)+cos(\alpha)-cos(\alpha)+sin(\alpha))}\\
+		&=\frac{sin(\alpha)^2-cos(\alpha)^2}{2*cos(\alpha)*sin(\alpha)}
+	\end{align*}
+	Daraus folgt: \[m_{EF}=\frac{sin(\alpha)^2-cos(\alpha)^2}{2*cos(\alpha)*sin(\alpha)}=\frac{sin(\alpha)^2-cos(\alpha)^2}{2*cos(\alpha)*sin(\alpha)}=m_{GH}\]
+	Die beiden Geraden $g_{EF}$ und $g_{GH}$ sind also parallel.
+\newpage
+\section{Aufgabe}
+	Wir multiplizieren $\sqrt{2}$ mit $10^n$ ($n\in \mathbb{N}$) und runden ab. Damit erhalten wir eine natürliche Zahl, bestehend aus einer 1 und den ersten $n$ Nachkommastellen von $\sqrt{2}$. Diese Zahl nennen wir $s_n$. Für die ersten $n$ Nachkommastellen von $\sqrt{2}$ gilt, dass es keine bessere untere Annäherung an $\sqrt{2}$ gibt. Erhöht man also die letzte Stelle um 1, so ist die Zahl schon größer als $\sqrt{2}$. Wir nutzen diese Bedingung und schreiben
+\begin{align}
+    s_n<\sqrt{2}*10^{n}<(s_n+1)\\
+	s_n^2<2*10^{2n}<(s_n+1)^2
+\end{align}
+	In einer solchen Ungleichung (für $k$ Nachkommastellen mit $k\in \mathbb{N}$) sei $s_k^2$ unsere Annäherung $A_k$ für $k$ Stellen, $2*10^{2k}$ unser Grenzwert $G_k$ für $k$ Stellen und $(s_k+1)^2$ sei $B_k$.
+	Es gilt stets: $A_k<G_k<B_k$ mit $A_k,G_k,B_k\in\mathbb{N}$.
+	Nun nehmen wir an, dass nach diesen ersten $n$ Stellen von $\sqrt{2}$\ \ $n+1$ Nullen kommen. Auch für diese angenommenen $2n+1$ Nachkommastellen von $\sqrt{2}$ müsste obige Bedingung gelten. Wir multiplizieren unsere Annäherung von $\sqrt{2}$ diesmal mit $10^{2n+1}$, nennen sie $s_{2n+1}$ und quadrieren erneut:
+	\[s_{2n+1}^2<2*10^{4n+2}<(s_{2n+1}+1)^2\]
+	Nun ist aber $s_{2n+1}$ aufgrund der $n+1$ angehängten Nullen einfach das $10^{n+1}$-fache von $s_n$.
+	\[(10^{n+1}*s_n)^2<2*10^{4n+2}<(10^{n+1}*s_n+1)^2\]
+	Nun betrachten wir die Differenz $G_{2n+1}-A_{2n+1}$.
+	\begin{align*}
+		G_{2n+1}-A_{2n+1}&<B_{2n+1}-A_{2n+1}\\
+		2*10^{4n+2}-(10^{n+1}*s_n)^2&<(10^{n+1}*s_n+1)^2-(10^{n+1}*s_n)^2\\
+		2*10^{4n+2}-10^{2n+2}*s_n^2&<10^{2n+2}*s_n^2+2*10^{n+1}*s_n+1-10^{2n+2}*s_n^2\\
+		10^{2n+2}*\left(2*10^{2n}-s_n^2\right)&<2*10^{n+1}*s_n+1\\
+		2*10^{2n}-s_n^2&<\frac{2*10^{n+1}*s_n+1}{10^{2n+2}}\\
+		G_n-A_n&<\frac{2*s_n}{10^{n+1}}+\frac{1}{10^{2n+2}}\\
+		\intertext{Mit Gleichung (4.1) folgt}
+		G_n-A_n&<\frac{2*\sqrt{2}*10^{n}}{10^{n+1}}+\frac{1}{10^{2n+2}}\\
+		G_n-A_n&<\frac{2*\sqrt{2}}{10}+\frac{1}{10^{2n+2}}\\
+		G_n-A_n&<1
+	\end{align*}
+	Da sowohl $G_n$ als auch $A_n$ natürliche Zahlen sind und ihre Differenz kleiner als 1 ist, müssen die beiden identisch sein.
+	\begin{align*}
+	G_n&=A_n\\
+	2*10^{2n}&=s_n^2\\
+	2*10^{2n}&=(\lfloor\sqrt{2}*10^n\rfloor)^2\\
+	\sqrt{2}*10^n&=\lfloor\sqrt{2}*10^n\rfloor
+	\end{align*}
+	Das würde heißen, dass $\sqrt{2}*10^n$ eine ganze Zahl ist. Das trifft aber offensichtlich nicht zu, sodass unsere Annahme ad absurdum geführt wurde und jede Folge von $n+1$ aufeinanderfolgenden Nullen nach den ersten $n$ Ziffern in der Dezimaldarstellung von $\sqrt{2}$ nicht die bestmögliche Annäherung an $\sqrt{2}$ sein kann und daher in der Dezimaldarstellung von $\sqrt{2}$ nicht vorkommt.\\
+	q.e.d.\\
+	s.d.g.
+\end{document}

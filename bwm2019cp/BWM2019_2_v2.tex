@@ -1,0 +1,376 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[ngerman]{babel}
+
+\usepackage{amsmath,amssymb,amstext,amsthm}
+\usepackage[fleqn,tbtags]{mathtools}
+\usepackage[left = 3cm, right = 3cm, bottom = 3cm]{geometry}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\rhead{Josua Kugler}
+\usepackage{tikz, pgf, pgfplots}
+\usetikzlibrary{arrows, quotes, angles, babel}
+\pgfplotsset{compat=1.15}
+\usepackage{mathrsfs}
+\usepackage{color}
+\newcommand{\degre}{\ensuremath{^\circ}}
+\newtheorem{df}{Definition}
+\newtheorem{satz}{Satz}
+\newtheorem{lemma}{Lemma}
+\newtheorem{fakt}{Fakt}
+\newtheorem{korollar}{Korollar}
+\newcommand{\RM}[1]{\MakeUppercase{\romannumeral #1{.}}}
+\newcommand{\strecke}[1]{\left|\overline{#1}\right|}
+\newcommand{\myqed}{\begin{flushright} q.e.d.\\ s.d.g.\end{flushright}}
+
+\title{Bundeswettbewerb Mathematik 2019 Runde 2}
+\author{Josua Kugler}
+
+\begin{document}
+	\maketitle
+	\paragraph*{Aufgabe 1} 120 Piraten verteilen unter sich 119 Goldstücke. Danach kontrolliert der Kapitän, ob irgendeiner der Piraten 15 oder mehr Goldstücke hat. Wenn er den ersten solchen findet, muss dieser alle seine Goldstücke anderen Piraten geben, wobei er keinem mehr als ein Goldstück geben darf. Diese Kontrolle wird wiederholt, solange es irgendeinen Piraten mit 15 oder mehr Goldstücken gibt.\\
+	Endet dieser Vorgang nach endlich vielen Kontrollen?
+	\paragraph*{Aufgabe 2} Bestimme den kleinstmöglichen Wert der Summe $S(a,b,c) = \dfrac{ab}{c} + \dfrac{bc}{a} + \dfrac{ca}{b}$, wobei $a, b, c$ drei positive reelle Zahlen mit $a^2 + b^2 + c^2 = 1$ sind.
+	\paragraph*{Aufgabe 3} Gegeben sei das Dreieck $ABC$ mit $\overline{AC}>\overline{BC}$ und Inkreis $k$. Weiter seien $M$, $W$ und $L$ die Punkte auf der Geraden $AB$, die die Seitenhalbierende bzw. Winkelhalbierende bzw. Höhe von $C$ mit der Geraden $AB$ gemeinsam haben. Diejenige Tangente an $k$ durch $M$, die verschieden von $AB$ ist, berühre $k$ in $T$.\\
+	Beweise, dass die Winkel $\angle MTW$ und $\angle TLM$ gleich groß sind.
+	\paragraph*{Aufgabe 4} Beweise: Für keine ganze Zahl $k\geq 2$ liegen zwischen $10k$ und $10k+100$ mehr als $23$ Primzahlen.
+	\paragraph*{Anmerkung} Im folgenden sind alle Variablen reell, sodass Quadrate stets nicht negativ sind.
+	\newpage
+    \section{Aufgabe}
+    Der Pirat, dessen Goldstücke bei der $n$-ten Kontrolle umverteilt werden, sei der $n$-Pirat. Angenommen, der Vorgang endet nicht nach endlich vielen Kontrollen. Dann muss es für alle $n\geq 1,\; n\in \mathbb{N}$ einen $n$-Piraten geben. Da der $m$-Pirat nach der $m$-ten Kontrolle $0$ Goldstücke besitzt und bei jeder Kontrolle höchstens ein Goldstück hinzubekommt, kann er frühestens wieder $m+15$-Pirat sein. Daher sind alle $n$-Piraten mit $1\leq n\leq 15$ paarweise verschieden. Der $1$-Pirat muss vor der ersten Kontrolle mindestens 15 Goldstücke haben. Da jeder Pirat bei jeder Umverteilung höchstens ein Goldstück erhalten kann, muss der $2$-Pirat vor der ersten Kontrolle mindestens 14 Goldstücke, der $3$-Pirat mindestens 13 Goldstücke und im Allgemeinen der $k$-Pirat vor der ersten Kontrolle mindestens $\max(0,16-k)$ Goldstücke besitzen.
+    In Summe benötigt man also, damit der Vorgang nicht noch vor der $16$-ten Kontrolle endet, mindestens $\sum_{k = 1}^{15}	 \max(0,16-k)= \sum_{k = 1}^{15} 16-k =  \sum_{k = 1}^{15} k =  120$ Goldstücke.
+    Es gibt allerdings nur 119 Goldstücke. Damit ist die Annahme ad absurdum geführt und der Vorgang endet nach endlich vielen Kontrollen.\myqed
+    \newpage
+    \section{Aufgabe}
+    Es gilt: $a,b,c>0$ und $a,b,c \in \mathbb{R}$, sodass im folgenden nie durch 0 geteilt wird.
+    \begin{align*}
+        (a^2b^2-b^2c^2)^2+(b^2c^2-c^2a^2)^2+(a^2c^2-a^2b^2)^2&\geq 0\\
+        2(a^2b^2)^2+2(b^2c^2)^2+2(c^2a^2)^2 - 2a^2b^4c^2-2a^2b^2c^4-2a^4b^2c^2&\geq 0\\
+        2(a^2b^2)^2+2(b^2c^2)^2+2(c^2a^2)^2+4a^2b^4c^2+4a^2b^2c^4+4a^4b^2c^2&\geq 6a^2b^4c^2+6a^2b^2c^4+6a^4b^2c^2&&\left|\cdot \frac{1}{2a^2b^2c^2}\right.\\
+        \dfrac{(a^2b^2)^2+(b^2c^2)^2+(c^2a^2)^2+ 2\left(a^2b^4c^2+a^2b^2c^4+a^4b^2c^2\right)}{a^2b^2c^2}&\geq 3\left(a^2+b^2+c^2\right)\\
+        \dfrac{\left(a^2b^2+b^2c^2+c^2a^2\right)^2}{a^2b^2c^2} &\geq 3\\
+        \dfrac{a^2b^2+b^2c^2+c^2a^2}{abc} &\geq \sqrt{3}\\
+        \dfrac{a b}{c} + \dfrac{a c}{b} + \dfrac{b c}{a} &\geq \sqrt{3}\\
+    \end{align*}
+    Für $a=b=c=\dfrac{1}{\sqrt{3}}$ ist $\dfrac{a b}{c} + \dfrac{a c}{b} + \dfrac{b c}{a} = \sqrt{3}$.\myqed
+    \newpage
+    \section{Aufgabe}
+    \input{BWM19_2_3_graphic1.tex}\ \newline
+    O.B.d.A. (jedes Dreieck, das den Bedingungen der Aufgabenstellung genügt, kann durch Spiegeln, Drehen und Stauchen bzw. Strecken in das folgende Dreieck überführt werden) legen wir die Eckpunkte des Dreiecks auf folgende Koordinaten fest: $A(0|0)$, $B(1|0)$ und $C(x_c|y_c)$ mit $x_c> 0.5$ und $y_c> 0$. Daraus folgen unmittelbar $L(x_c|0)$ und $M(0.5|0)$. 
+    Zudem sei $\strecke{BC}\coloneqq a>0$, $\strecke{AC}\coloneqq b>a$ und $\strecke{AB}\coloneqq c = 1$.
+    $D(x_d|y_d)$ sei der Mittelpunkt von $k$ und $F(x_f|y_f)$ ist definiert durch $x_f = x_d$ sowie $y_f = 0$.
+    Nun müssen wir noch die Koordinaten von $W(x_w|0)$ und $F(x_f|0)$ bestimmen.
+    \begin{lemma}
+    	Ein Punkt $O$ auf der Strecke $\overline{PQ}$ lässt sich stets durch $O = a*P+(1-a)*Q$ mit $a>0$ darstellen.
+    	Gilt $\frac{\strecke{OQ}}{\strecke{OP}} = \frac{x}{y}$, so ist $a = \frac{x}{x+y}$ ($x, y, a>0,\; a \neq 1$).
+    \end{lemma}
+	\begin{proof}
+		Der Ortsvektor eines beliebigen Punktes $R$ sei $\vec{R}$. Jeder Vektor $\vec{O}$, sodass $\vec{O}\in \overline{PQ}$ lässt sich darstellen als 
+		\begin{align*}
+			\vec{O}&= \vec{Q} + a*\vec{QP}&&| a\leq 1\\
+			&= \vec{Q} + a* (\vec{P} - \vec{Q})\\
+			&= a*\vec{P}+(1-a)*\vec{Q}
+		\end{align*}
+		Zudem gilt $\frac{|\vec{OQ}|}{|\vec{OP}|} = \frac{\vec{Q}-\vec{O}}{\vec{P}-\vec{O}} = \frac{\vec{Q}-(a*\vec{P}+(1-a)*\vec{Q})}{\vec{P}-(a*\vec{P}+(1-a)*\vec{Q})} = \frac{a\vec{Q}-a\vec{P}}{(1-a)\vec{P}-(1-a)\vec{Q}} =  \frac{a*|\vec{PQ}|}{(1-a)*|\vec{QP}|} = \frac{a}{1-a}$. Das setzen wir mit dem gewünschten Verhältnis $\frac{x}{y}$ gleich und erhalten
+		\begin{align*}
+			\frac{a}{1-a} &= \frac{x}{y}\\
+			a &= \frac{x}{y}- a\frac{x}{y}\\
+			a + a\frac{x}{y}&=  \frac{x}{y}\\
+			\frac{x+y}{y}a &= \frac{x}{y}\\
+			a &= \frac{x}{x+y}
+		\end{align*}
+	\end{proof}
+	\noindent Aus dem Winkelhalbierendensatz folgt, dass $W$ die Strecke $\overline{AB}$ im Verhältnis $\frac{\strecke{AW}}{1-\strecke{AW}} = \frac{a}{b}$ mit $\strecke{AW} \neq 1,\; a,b, \strecke{AW}>0$ teilt.
+	Es ist also $W = \frac{a}{a+b}*A + \frac{b}{a+b}*B = \frac{a}{a+b}*(0|0) + \frac{b}{a+b}*(1|0) = \left(\left.\frac{b}{a+b}\right|0\right)$ und damit $x_w = \frac{b}{a+b}$.
+	Für $F$ benötigen wir noch die Koordinaten des Inkreismittelpunkts $D(x_d|y_d)$.
+    \begin{lemma}
+        Für den Inkreismittelpunkt $I(x_I|y_I)$ eines Dreiecks mit den Eckpunkten $A(x_A|y_A)$, $B(x_B|y_B)$, $C(x_C|y_C)$ und den Seitenlängen $a,\ b,\ c>0$ gilt $x_I = \dfrac{ax_{A}+bx_{B}+cx_{C}}{a+b+c}$ und $y_I = \dfrac {ay_{A}+by_{B}+cy_{C}}{a+b+c}$.
+   \end{lemma}
+   \begin{proof}
+   	Da in diesem Beweis nur durch Summen von Seitenlängen geteilt wird und diese größer 0 sind, wird nie durch 0 geteilt.
+   	$A'$ sei der Schnittpunkt der Winkelhalbierenden von $\angle BAC$ mit der Seite $a$.
+   	Analog sei $B'$ der Schnittpunkt der Winkelhalbierenden von $\angle CBA$ mit der Seite $a$.
+   	Der Winkelhalbierendensatz besagt, dass $A'$ die Seite $a$ im Verhältnis $\dfrac{A'B}{A'C}=\dfrac{c}{b}$ teilt. Daraus folgt $A'=\dfrac{b}{b+c}B+\dfrac{c}{b+c}C$.
+   	Analog erhält man $B'=\dfrac{a}{a+c}A+\dfrac{c}{a+c}C$.
+   	Der Inkreismittelpunkt $I$ liegt auf der Strecke $AA'$ und lässt sich daher folgendermaßen darstellen:
+   	\begin{align*}
+   	I&= (1-p)A+pA'&&\left|p\in [0,1]\right.\\
+   	&= \textcolor{green}{(1-p)}A+\textcolor{blue}{\dfrac{pb}{b+c}}B+\textcolor{red}{\dfrac{pc}{b+c}}C
+   	\end{align*}
+   	$I$ liegt aber auch auf der Strecke $BB'$.
+   	\begin{align*}
+   	I&= (1-q)B+qB'&&\left|q\in [0,1]\right.\\
+   	&= \textcolor{blue}{(1-q)}B+\textcolor{green}{\dfrac{qa}{a+c}}A+\textcolor{red}{\dfrac{qc}{a+c}}C
+   	\end{align*}
+   	Wir suchen also ein Tupel $(p,q)$, sodass beide Darstellungen von $I$ übereinstimmen.
+   	Dafür können wir einfach die Koeffizienten der einzelnen Punkte vergleichen.
+   	Für $A$ erhält man \textcolor{green}{$(1-p) = \dfrac{qa}{c+a}$}, für $B$ \textcolor{blue}{$(1-q) = \dfrac{pb}{b+c}$} und für $C$ \textcolor{red}{$\dfrac{pc}{b+c} = \dfrac{qc}{a+c}$}. Für $p = \dfrac{b+c}{a+b+c}$ und $q = \dfrac{a+c}{a+b+c}$ sind alle drei Gleichungen erfüllt:
+   	\begin{itemize}
+   		\item \textcolor{green}{$\left(1-\dfrac{b+c}{a+b+c}\right) = \dfrac{a}{a+b+c} = \dfrac{\dfrac{a+c}{a+b+c}a}{c+a}$}
+   		\item \textcolor{blue}{$\left(1-\dfrac{a+c}{a+b+c}\right) = \dfrac{b}{a+b+c} = \dfrac{\dfrac{b+c}{a+b+c}b}{b+c}$}
+   		\item \textcolor{red}{$\dfrac{\dfrac{b+c}{a+b+c}c}{b+c} = \dfrac{c}{a+b+c} = \dfrac{\dfrac{a+c}{a+b+c}c}{a+c}$}
+   	\end{itemize}
+   	Daher erhalten wir \[I = \dfrac{a}{a+b+c}A + \dfrac{b}{a+b+c}B+\dfrac{c}{a+b+c}C\]
+   	Daraus folgt sofort $x_I = \dfrac{ax_{A}+bx_{B}+cx_{C}}{a+b+c}$ und $y_I = \dfrac {ay_{A}+by_{B}+cy_{C}}{a+b+c}$.
+   \end{proof}
+    Es ist also $D\left(\dfrac{b+x_c}{a+b+1}\left|\dfrac{y_c}{a+b+1}\right.\right)$ mit $a = \sqrt{y_c^2+(1-x_c)^2}$ und $b = \sqrt{y_c^2+x_c^2}$. Damit erhält man $F\left(\left.\dfrac{b+x_c}{a+b+1}\right|0\right)$.
+    \iffalse
+    \begin{lemma}
+    	Die Punkte $A,B,C,D,F,M,L,T$ und $W$ sind unabhängig von der Wahl von $C$ stets paarweise verschieden.
+    \end{lemma}
+    \begin{proof}
+    	Da $A$, $B$ und $C$ paarweise verschieden sind, kann auch der Inkreismittelpunkt $D$ auf keinen der drei Punkte fallen. Die Winkelhalbierende von $\angle ABC$ ist nur für $a=b$ senkrecht. Da $DF$ per Definition senkrecht ist, fallen $DF$ und $DW$, also $F$ und $W$ nur für $a=b$ zusammen. Das gleiche gilt für $CL$ und $CW$ und folglich $L$ und $W$; sowie für $CD$ und $CL$ und damit $F$ und $L$. $L$ und $M$ fallen auch nicht zusammen, da $x_\ell = x_c > 0.5 = x_m$. $M$ und $W$ sind ebenfalls verschieden, da $x_w = \frac{b}{a+b} > 0.5 = x_m$. Für $x_w>x_m$ ist auch $x_f> x_m$. Wir haben also gezeigt, dass $L, W, M$ und $F$ alle paarweise verschieden sind. Alle 4 Punkte liegen zwischen $A$ und $B$ und haben die $y$-Koordinate 0, daher sind sie auch von allen anderen Punkten verschieden.
+    	Die $y$-Koordinate von $T$ ist per Definition $>0$, da der Radius von $k$ $>0$ ist, gilt auch $T\neq D$. Da $k$ der Inkreis ist und $T$ ein Punkt auf dem Inkreis ist $T$ auch von allen Eckpunkten verschieden.
+    \end{proof}
+	\noindent Daraus folgt unmittelbar, dass alle Streckenlängen zwischen zwei dieser Punkte größer 0 sind.
+	\fi
+	\begin{lemma}
+		$0 < x_m < x_w, x_f, x_l < 1$
+	\end{lemma}
+	\begin{proof}
+		Mit $x_m = 0.5$ bleibt uns zu zeigen: $0.5<x_w,x_f,x_\ell < 1$. Es gilt $x_\ell = x_c > 0.5$ und $x_w = \frac{b}{a+b} > 0.5$ (da $b>a$). Mit $x_f = \frac{b+x_c}{a+b+1}$ bleibt nun noch zu zeigen, dass
+		\begin{align*}
+			\frac{b+x_c}{a+b+1} &> 0.5\\
+			2b+2x_c &> a+b+1&&|b>a\\
+			2x_c &> 1
+		\end{align*}
+	\end{proof}
+    \begin{lemma}\label{streckenverhaeltnis}
+        \[\dfrac{\strecke{MW}}{\strecke{MF}} = \dfrac{\strecke{MF}}{\strecke{ML}}\]
+    \end{lemma}
+    \begin{proof}
+    \allowdisplaybreaks
+    Aus Lemma 3 folgt direkt, dass alle diese Strecken verschieden von 0 sind.
+    Da es sich hier um Streckenlängen handelt, betrachten wir für alle Quadratwurzeln $\pm u = \sqrt{v}$ nur die positive Lösung $+u$. Daher sind alle Wurzelausdrücke im folgenden positiv.
+    Aus $b>a>0$ folgt $\strecke{ML} = x_l-x_m = x_c-\dfrac{1}{2} = 2x_c-1> 0$, $a+b+1>a+b> b-a>0$ und $b^2-a^2>0$. Im Verlauf der folgenden Umformungen wird also nie durch 0 geteilt. Wir betrachten zunächst $b^2-a^2$.
+    \begin{align*}
+    b^2-a^2&=\sqrt{x_c^2+y_c^2}^2-\sqrt{(1-x)^2+y_c^2}^2\\
+    &=x_c^2+y_c^2 - (1-2x_c+x_c^2+y_c^2)\\
+    &=2x_c-1
+    \end{align*}
+    Nun beweisen wir das Lemma.
+    \begin{align*}
+        \strecke{MW} &= \dfrac{\strecke{MF}^2}{\strecke{ML}}\\
+        x_w-x_m &= \dfrac{(x_f-x_m)^2}{x_\ell-x_m}\\
+        \dfrac{b}{a+b}-\dfrac{1}{2} &= \dfrac{\left(\dfrac{b+x_c}{a+b+1}-\dfrac{1}{2}\right)^2}{x_c-\dfrac{1}{2}}&&\left|
+    \text{mit 2 erweitern}\right.\\
+        \frac{b-a}{2(a+b)} &= \frac{\left(\frac{2x_c+b-a-1}{2(a+b+1)}\right)^2}{\frac{2x_c-1}{2}}&&|\cdot 2(2x_c-1), \text{ erweitern mit $(b-a)$}\\
+        \frac{(b-a)^2}{b^2-a^2}(2x_c-1)&= \left(\frac{2x_c+b-a-1}{a+b+1}\right)^2&&|b^2-a^2 = 2x_c-1,\text{ Wurzel ziehen}\\
+        (b-a) &= \frac{2x_c+b-a-1}{a+b+1}&&|\cdot (a+b+1)\\
+        (b-a)*(b+a) + b-a&= 2x_c+b-a-1&&|+a-b\\
+        b^2-a^2&= 2x_c-1
+    \end{align*}
+    \end{proof}
+    \noindent Da beide Male eine Tangente an $k$ gelegt wird, gilt $\angle MTD = \angle DFM = 90^{\circ}$. Außerdem ist der Radius von $k$ gleich $\strecke{TD} = \strecke{DF}$. Zudem haben die Dreiecke $MDT$ und $MFD$ auch noch die Seite $MD$ gemeinsam.
+    Die Dreiecke $MDT$ und $MFD$ stimmen also in zwei Seitenlängen und dem Winkel, welcher der längeren von beiden Seitenlängen gegenüberliegt, überein (Dass $\strecke{MD} > \strecke{TD}, \strecke{DF}$ ist, ergibt sich sofort aus dem Satz des Pythagoras). Daher sind sie kongruent und somit ist auch $\strecke{TM} = \strecke{MF}$.
+    Mit Lemma~\ref{streckenverhaeltnis} erhält man folgende Gleichung.
+    \begin{align*}
+        \dfrac{\strecke{MW}}{\strecke{TM}} &= \dfrac{\strecke{TM}}{\strecke{ML}}\\
+        \intertext{Da die Dreiecke $MWT$ und $MLT$ auch noch den Winkel $\angle WMT$ gemeinsam haben, ist das Verhältnis zweier Seiten sowie der eingeschlossene Winkel gleich, sie sind also ähnlich und es gilt}
+        \angle MTW &= \angle TLM\\
+    \end{align*}
+    \myqed
+    \newpage
+    \section{Aufgabe}
+    Wir werden im folgenden die Menge der Zahlen von $10k$ bis $10k+100$ betrachten ($k\in \mathbb{N},\ k\geq 2$). Wir wissen, dass alle geraden oder durch 5 teilbaren Zahlen keine Primzahlen sind. Da $10 k \equiv 0 \mod 2, 5$ wissen wir, dass es 60 Zahlen gibt, die wir demzufolge stets als nicht prim identifizieren können (nämlich 50 gerade Zahlen und 10 Zahlen, die auf eine 5 enden).
+    Sei $i \coloneqq 10k \mod 3$ und $j \coloneqq 10k \mod 7$.
+    In der folgenden Tabelle betrachten wir für alle möglichen Kombinationen von $i, j$, welche der Zahlen wir zusätzlich als nicht prim identifizieren können. Der Übersichtlichkeit halber schreiben wir in den folgenden 3 Tabellen einfach $\mathbf{1}, \mathbf{2}, \mathbf{\dots}, \mathbf{100}$ anstatt $10k+1, 10k+2, \dots, 10k+100$. Zusätzlich sei für Aufgabe 4 durchweg $n$ die Anzahl der Zahlen, von denen wir wissen, dass sie keine Primzahlen sind. Rot gefärbt werden Werte für $n$, die kleiner sind als $100-23 = 77$.\\\ \\
+\begin{tabular}{||c|c|l|c||}
+	i&j&Tabelle 1: durch 3 oder 7, aber nicht durch 2 oder 5 teilbar&$n$\\
+	\hline
+	0&0&\textbf{3}, \textbf{7}, \textbf{9}, \textbf{21}, \textbf{27}, \textbf{33}, \textbf{39}, \textbf{49}, \textbf{51}, \textbf{57}, \textbf{63}, \textbf{69}, \textbf{77}, \textbf{81}, \textbf{87}, \textbf{91}, \textbf{93}, \textbf{99}&78\\
+	0&1&\textbf{3}, \textbf{9}, \textbf{13}, \textbf{21}, \textbf{27}, \textbf{33}, \textbf{39}, \textbf{41}, \textbf{51}, \textbf{57}, \textbf{63}, \textbf{69}, \textbf{81}, \textbf{83}, \textbf{87}, \textbf{93}, \textbf{97}, \textbf{99}&78\\
+	0&2&\textbf{3}, \textbf{9}, \textbf{19}, \textbf{21}, \textbf{27}, \textbf{33}, \textbf{39}, \textbf{47}, \textbf{51}, \textbf{57}, \textbf{61}, \textbf{63}, \textbf{69}, \textbf{81}, \textbf{87}, \textbf{89}, \textbf{93}, \textbf{99}&78\\
+	0&3&\textbf{3}, \textbf{9}, \textbf{11}, \textbf{21}, \textbf{27}, \textbf{33}, \textbf{39}, \textbf{51}, \textbf{53}, \textbf{57}, \textbf{63}, \textbf{67}, \textbf{69}, \textbf{81}, \textbf{87}, \textbf{93}, \textbf{99}&77\\
+	0&4&\textbf{3}, \textbf{9}, \textbf{17}, \textbf{21}, \textbf{27}, \textbf{31}, \textbf{33}, \textbf{39}, \textbf{51}, \textbf{57}, \textbf{59}, \textbf{63}, \textbf{69}, \textbf{73}, \textbf{81}, \textbf{87}, \textbf{93}, \textbf{99}&78\\
+	0&5&\textbf{3}, \textbf{9}, \textbf{21}, \textbf{23}, \textbf{27}, \textbf{33}, \textbf{37}, \textbf{39}, \textbf{51}, \textbf{57}, \textbf{63}, \textbf{69}, \textbf{79}, \textbf{81}, \textbf{87}, \textbf{93}, \textbf{99}&77\\
+	0&6&\textbf{1}, \textbf{3}, \textbf{9}, \textbf{21}, \textbf{27}, \textbf{29}, \textbf{33}, \textbf{39}, \textbf{43}, \textbf{51}, \textbf{57}, \textbf{63}, \textbf{69}, \textbf{71}, \textbf{81}, \textbf{87}, \textbf{93}, \textbf{99}&78\\
+	1&0&\textbf{7}, \textbf{11}, \textbf{17}, \textbf{21}, \textbf{23}, \textbf{29}, \textbf{41}, \textbf{47}, \textbf{49}, \textbf{53}, \textbf{59}, \textbf{63}, \textbf{71}, \textbf{77}, \textbf{83}, \textbf{89}, \textbf{91}&77\\
+	1&1&\textbf{11}, \textbf{13}, \textbf{17}, \textbf{23}, \textbf{27}, \textbf{29}, \textbf{41}, \textbf{47}, \textbf{53}, \textbf{59}, \textbf{69}, \textbf{71}, \textbf{77}, \textbf{83}, \textbf{89}, \textbf{97}&\textcolor{red}{76}\\
+	1&2&\textbf{11}, \textbf{17}, \textbf{19}, \textbf{23}, \textbf{29}, \textbf{33}, \textbf{41}, \textbf{47}, \textbf{53}, \textbf{59}, \textbf{61}, \textbf{71}, \textbf{77}, \textbf{83}, \textbf{89}&\textcolor{red}{75}\\
+	1&3&\textbf{11}, \textbf{17}, \textbf{23}, \textbf{29}, \textbf{39}, \textbf{41}, \textbf{47}, \textbf{53}, \textbf{59}, \textbf{67}, \textbf{71}, \textbf{77}, \textbf{81}, \textbf{83}, \textbf{89}&\textcolor{red}{75}\\
+	1&4&\textbf{3}, \textbf{11}, \textbf{17}, \textbf{23}, \textbf{29}, \textbf{31}, \textbf{41}, \textbf{47}, \textbf{53}, \textbf{59}, \textbf{71}, \textbf{73}, \textbf{77}, \textbf{83}, \textbf{87}, \textbf{89}&\textcolor{red}{76}\\
+	1&5&\textbf{9}, \textbf{11}, \textbf{17}, \textbf{23}, \textbf{29}, \textbf{37}, \textbf{41}, \textbf{47}, \textbf{51}, \textbf{53}, \textbf{59}, \textbf{71}, \textbf{77}, \textbf{79}, \textbf{83}, \textbf{89}, \textbf{93}&77\\
+	1&6&\textbf{1}, \textbf{11}, \textbf{17}, \textbf{23}, \textbf{29}, \textbf{41}, \textbf{43}, \textbf{47}, \textbf{53}, \textbf{57}, \textbf{59}, \textbf{71}, \textbf{77}, \textbf{83}, \textbf{89}, \textbf{99}&\textcolor{red}{76}\\
+	2&0&\textbf{1}, \textbf{7}, \textbf{13}, \textbf{19}, \textbf{21}, \textbf{31}, \textbf{37}, \textbf{43}, \textbf{49}, \textbf{61}, \textbf{63}, \textbf{67}, \textbf{73}, \textbf{77}, \textbf{79}, \textbf{91}, \textbf{97}&77\\
+	2&1&\textbf{1}, \textbf{7}, \textbf{13}, \textbf{19}, \textbf{27}, \textbf{31}, \textbf{37}, \textbf{41}, \textbf{43}, \textbf{49}, \textbf{61}, \textbf{67}, \textbf{69}, \textbf{73}, \textbf{79}, \textbf{83}, \textbf{91}, \textbf{97}&78\\
+	2&2&\textbf{1}, \textbf{7}, \textbf{13}, \textbf{19}, \textbf{31}, \textbf{33}, \textbf{37}, \textbf{43}, \textbf{47}, \textbf{49}, \textbf{61}, \textbf{67}, \textbf{73}, \textbf{79}, \textbf{89}, \textbf{91}, \textbf{97}&77\\
+	2&3&\textbf{1}, \textbf{7}, \textbf{11}, \textbf{13}, \textbf{19}, \textbf{31}, \textbf{37}, \textbf{39}, \textbf{43}, \textbf{49}, \textbf{53}, \textbf{61}, \textbf{67}, \textbf{73}, \textbf{79}, \textbf{81}, \textbf{91}, \textbf{97}&78\\
+	2&4&\textbf{1}, \textbf{3}, \textbf{7}, \textbf{13}, \textbf{17}, \textbf{19}, \textbf{31}, \textbf{37}, \textbf{43}, \textbf{49}, \textbf{59}, \textbf{61}, \textbf{67}, \textbf{73}, \textbf{79}, \textbf{87}, \textbf{91}, \textbf{97}&78\\
+	2&5&\textbf{1}, \textbf{7}, \textbf{9}, \textbf{13}, \textbf{19}, \textbf{23}, \textbf{31}, \textbf{37}, \textbf{43}, \textbf{49}, \textbf{51}, \textbf{61}, \textbf{67}, \textbf{73}, \textbf{79}, \textbf{91}, \textbf{93}, \textbf{97}&78\\
+	2&6&\textbf{1}, \textbf{7}, \textbf{13}, \textbf{19}, \textbf{29}, \textbf{31}, \textbf{37}, \textbf{43}, \textbf{49}, \textbf{57}, \textbf{61}, \textbf{67}, \textbf{71}, \textbf{73}, \textbf{79}, \textbf{91}, \textbf{97}, \textbf{99}&78\\
+\end{tabular}\\\ \\\ \\
+    Durch Tabelle 1 ist für alle außer 5 Fälle gezeigt, dass es höchstens 23 Primzahlen im Intervall von $10k$ bis $10k+100$ geben kann. 
+    Wir betrachten jeden der 5 Fälle mit $n<77$ modulo 11, sodass wir insgesamt 55 Fälle erhalten und definieren hierzu $l \coloneqq 10k \mod 11$. Aus der Tabelle ist ersichtlich, dass für alle Fälle mit $n<77$ auch $i=1$ ist.
+    Daher müssen wir die Kongruenz modulo $3$ nicht weiter betrachten und in den folgenden Tabellen ist $(10k \mod 3) = i = 1$.\\
+\begin{minipage}[t]{0.5\textwidth}
+\vspace{0pt}
+\begin{tabular}{||c|c|l|c||}
+	j&l&Tabelle 2: durch 11 teilbar$^{\mathrm{a}}$&$n$\\
+	\hline
+	1&0&\textbf{33}, \textbf{99}&78\\
+	1&1&\textbf{21}, \textbf{43}, \textbf{87}&79\\
+	1&2&\textbf{9}, \textbf{31}&78\\
+	1&3&\textbf{19}, \textbf{63}&78\\
+	1&4&\textbf{7}, \textbf{51}, \textbf{73}&79\\
+	1&5&\textbf{39}, \textbf{61}&78\\
+	1&6&\textbf{49}, \textbf{93}&78\\
+	1&7&\textbf{37}, \textbf{81}&78\\
+	1&8&\textbf{3}, \textbf{91}&78\\
+	1&9&\textbf{57}, \textbf{79}&78\\
+	1&10&\textbf{1}, \textbf{67}&78\\
+	2&0&\textbf{99}&\textcolor{red}{76}\\
+	2&1&\textbf{21}, \textbf{43}, \textbf{87}&78\\
+	2&2&\textbf{9}, \textbf{31}, \textbf{97}&78\\
+	2&3&\textbf{63}&\textcolor{red}{76}\\
+	2&4&\textbf{7}, \textbf{51}, \textbf{73}&78\\
+	2&5&\textbf{39}&\textcolor{red}{76}\\
+	2&6&\textbf{27}, \textbf{49}, \textbf{93}&78\\
+	2&7&\textbf{37}, \textbf{81}&77\\
+	2&8&\textbf{3}, \textbf{69}, \textbf{91}&78\\
+	2&9&\textbf{13}, \textbf{57}, \textbf{79}&78\\
+	2&10&\textbf{1}, \textbf{67}&77\\
+	3&0&\textbf{33}, \textbf{99}&77\\
+	3&1&\textbf{21}, \textbf{43}, \textbf{87}&78\\
+	3&2&\textbf{9}, \textbf{31}, \textbf{97}&78\\
+	3&3&\textbf{19}, \textbf{63}&77\\
+	3&4&\textbf{7}, \textbf{51}, \textbf{73}&78\\
+	3&5&\textbf{61}&\textcolor{red}{76}\\
+\end{tabular}
+\end{minipage}
+\begin{minipage}[t]{0.5\textwidth}
+\vspace{0pt}
+\begin{tabular}{||c|c|l|c||}
+	j&l&durch 11 teilbar\footnote{aber nicht durch 2,3,5, oder 7 teilbar}&$n$\\
+	\hline
+	3&6&\textbf{27}, \textbf{49}, \textbf{93}&78\\
+	3&7&\textbf{37}&\textcolor{red}{76}\\
+	3&8&\textbf{3}, \textbf{69}, \textbf{91}&78\\
+	3&9&\textbf{13}, \textbf{57}, \textbf{79}&78\\
+	3&10&\textbf{1}&\textcolor{red}{76}\\
+	4&0&\textbf{33}, \textbf{99}&78\\
+	4&1&\textbf{21}, \textbf{43}&78\\
+	4&2&\textbf{9}, \textbf{97}&78\\
+	4&3&\textbf{19}, \textbf{63}&78\\
+	4&4&\textbf{7}, \textbf{51}&78\\
+	4&5&\textbf{39}, \textbf{61}&78\\
+	4&6&\textbf{27}, \textbf{49}, \textbf{93}&79\\
+	4&7&\textbf{37}, \textbf{81}&78\\
+	4&8&\textbf{69}, \textbf{91}&78\\
+	4&9&\textbf{13}, \textbf{57}, \textbf{79}&79\\
+	4&10&\textbf{1}, \textbf{67}&78\\
+	6&0&\textbf{33}&77\\
+	6&1&\textbf{21}, \textbf{87}&78\\
+	6&2&\textbf{9}, \textbf{31}, \textbf{97}&79\\
+	6&3&\textbf{19}, \textbf{63}&78\\
+	6&4&\textbf{7}, \textbf{51}, \textbf{73}&79\\
+	6&5&\textbf{39}, \textbf{61}&78\\
+	6&6&\textbf{27}, \textbf{49}, \textbf{93}&79\\
+	6&7&\textbf{37}, \textbf{81}&78\\
+	6&8&\textbf{3}, \textbf{69}, \textbf{91}&79\\
+	6&9&\textbf{13}, \textbf{79}&78\\
+	6&10&\textbf{67}&77\\
+\end{tabular}
+\end{minipage}
+\ \newline
+Tabelle 2 zeigt für alle außer 6 Fälle, dass es höchstens 23 Primzahlen im Intervall von $10k$ bis $10k+100$ geben kann. Nun betrachten wir jeden dieser 6 Fälle modulo 13, sodass wir insgesamt 78 Fälle erhalten. Dabei sei $m\coloneqq 10k \mod 13$.\\
+\begin{minipage}[t]{0.5\textwidth}
+\vspace{0pt}
+\begin{flushleft}
+\begin{tabular}{||c|c|c|l|c||}
+	j&l&m&Tabelle 3: durch 13 teilbar$^{\mathrm{a}}$&$n$\\
+	\hline
+	2&0&0&\textbf{13}, \textbf{39}, \textbf{91}&79\\
+	2&0&1&\textbf{51}&77\\
+	2&0&2&\textbf{37}, \textbf{63}&78\\
+	2&0&3&\textbf{49}&77\\
+	2&0&4&\textbf{9}, \textbf{87}&78\\
+	2&0&5&\textbf{21}, \textbf{73}&78\\
+	2&0&6&\textbf{7}&77\\
+	2&0&7&\textbf{97}&77\\
+	2&0&8&\textbf{31}, \textbf{57}&78\\
+	2&0&9&\textbf{43}, \textbf{69}&78\\
+	2&0&10&\textbf{3}, \textbf{81}&78\\
+	2&0&11&\textbf{67}, \textbf{93}&78\\
+	2&0&12&\textbf{1}, \textbf{27}, \textbf{79}&79\\
+	2&3&0&\textbf{13}, \textbf{39}, \textbf{91}&79\\
+	2&3&1&\textbf{51}&77\\
+	2&3&2&\textbf{37}&77\\
+	2&3&3&\textbf{49}&77\\
+	2&3&4&\textbf{9}, \textbf{87}&78\\
+	2&3&5&\textbf{21}, \textbf{73}, \textbf{99}&79\\
+	2&3&6&\textbf{7}&77\\
+	2&3&7&\textbf{97}&77\\
+	2&3&8&\textbf{31}, \textbf{57}&78\\
+	2&3&9&\textbf{43}, \textbf{69}&78\\
+	2&3&10&\textbf{3}, \textbf{81}&78\\
+	2&3&11&\textbf{67}, \textbf{93}&78\\
+	2&3&12&\textbf{1}, \textbf{27}, \textbf{79}&79\\
+	2&5&0&\textbf{13}, \textbf{91}&78\\
+	2&5&1&\textbf{51}&77\\
+	2&5&2&\textbf{37}, \textbf{63}&78\\
+	2&5&3&\textbf{49}&77\\
+	2&5&4&\textbf{9}, \textbf{87}&78\\
+	2&5&5&\textbf{21}, \textbf{73}, \textbf{99}&79\\
+	2&5&6&\textbf{7}&77\\
+	2&5&7&\textbf{97}&77\\
+	2&5&8&\textbf{31}, \textbf{57}&78\\
+	2&5&9&\textbf{43}, \textbf{69}&78\\
+	2&5&10&\textbf{3}, \textbf{81}&78\\
+	2&5&11&\textbf{67}, \textbf{93}&78\\
+	2&5&12&\textbf{1}, \textbf{27}, \textbf{79}&79\\
+\end{tabular}
+\end{flushleft}
+\end{minipage}
+\begin{minipage}[t]{0.5\textwidth}
+\vspace{0pt}
+\begin{flushleft}
+\begin{tabular}{||c|c|c|l|c||}
+	j&m&m&durch 13 teilbar\footnote{aber nicht durch 2,3,5,7, oder 11 teilbar}&$n$\\
+	\hline
+	3&5&0&\textbf{13}, \textbf{91}&78\\
+	3&5&1&\textbf{51}&77\\
+	3&5&2&\textbf{37}, \textbf{63}&78\\
+	3&5&3&\textbf{49}&77\\
+	3&5&4&\textbf{9}, \textbf{87}&78\\
+	3&5&5&\textbf{21}, \textbf{73}, \textbf{99}&79\\
+	3&5&6&\textbf{7}, \textbf{33}&78\\
+	3&5&7&\textbf{19}, \textbf{97}&78\\
+	3&5&8&\textbf{31}, \textbf{57}&78\\
+	3&5&9&\textbf{43}, \textbf{69}&78\\
+	3&5&10&\textbf{3}&77\\
+	3&5&11&\textbf{93}&77\\
+	3&5&12&\textbf{1}, \textbf{27}, \textbf{79}&79\\
+	3&7&0&\textbf{13}, \textbf{91}&78\\
+	3&7&1&\textbf{51}&77\\
+	3&7&2&\textbf{63}&77\\
+	3&7&3&\textbf{49}&77\\
+	3&7&4&\textbf{9}, \textbf{61}, \textbf{87}&79\\
+	3&7&5&\textbf{21}, \textbf{73}, \textbf{99}&79\\
+	3&7&6&\textbf{7}, \textbf{33}&78\\
+	3&7&7&\textbf{19}, \textbf{97}&78\\
+	3&7&8&\textbf{31}, \textbf{57}&78\\
+	3&7&9&\textbf{43}, \textbf{69}&78\\
+	3&7&10&\textbf{3}&77\\
+	3&7&11&\textbf{93}&77\\
+	3&7&12&\textbf{1}, \textbf{27}, \textbf{79}&79\\
+	3&10&0&\textbf{13}, \textbf{91}&78\\
+	3&10&1&\textbf{51}&77\\
+	3&10&2&\textbf{37}, \textbf{63}&78\\
+	3&10&3&\textbf{49}&77\\
+	3&10&4&\textbf{9}, \textbf{61}, \textbf{87}&79\\
+	3&10&5&\textbf{21}, \textbf{73}, \textbf{99}&79\\
+	3&10&6&\textbf{7}, \textbf{33}&78\\
+	3&10&7&\textbf{19}, \textbf{97}&78\\
+	3&10&8&\textbf{31}, \textbf{57}&78\\
+	3&10&9&\textbf{43}, \textbf{69}&78\\
+	3&10&10&\textbf{3}&77\\
+	3&10&11&\textbf{93}&77\\
+	3&10&12&\textbf{27}, \textbf{79}&78\\
+\end{tabular}
+\end{flushleft}
+\end{minipage}
+\ \newline
+    Aus der Tabelle ist ersichtlich, dass es für jeden der verbleibenden 78 Fälle höchstens 23 Primzahlen im Intervall von $10k$ bis $10k+100$ geben kann.\myqed
+\end{document}

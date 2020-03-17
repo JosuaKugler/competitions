@@ -1,0 +1,158 @@
+\documentclass[a4paper,10pt,ngerman]{scrartcl}
+\usepackage{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8x]{inputenc}
+\usepackage[a4paper,margin=2.5cm,footskip=0.5cm]{geometry}
+
+% Die nächsten drei Felder bitte anpassen:
+\newcommand{\Aufgabe}{Aufgabe 2: Twist} % Aufgabennummer und Aufgabennamen angeben
+\newcommand{\TeamID}{00920}       % Team-ID aus dem PMS angeben
+\newcommand{\TeamName}{Paddy Jo} % Team-Namen angeben
+\newcommand{\Namen}{Patrick M\"uller, Josua Kugler} % Namen der Bearbeiter/-innen dieser Aufgabe angeben
+
+% Kopf- und Fußzeilen
+\usepackage{scrlayer-scrpage, lastpage}
+\setkomafont{pageheadfoot}{\large\textrm}
+\lohead{\Aufgabe}
+\rohead{Team-ID: \TeamID}
+\cfoot*{\thepage{}/\pageref{LastPage}}
+
+% Position des Titels
+\usepackage{titling}
+\setlength{\droptitle}{-1.0cm}
+
+% Für mathematische Befehle und Symbole
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[gen]{eurosym}
+
+% Für Bilder
+\usepackage{graphicx}
+
+% Für Algorithmen
+\usepackage{algpseudocode}
+
+% Für Quelltext
+\usepackage{listings}
+\usepackage{color}
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+\lstset{
+  extendedchars=true,
+  literate={ä}{{\"a}}1 {ö}{{\"o}}1 {ü}{{\"u}}1 {ß}{{\ss}}1 {Ä}{{\"A}}1 {Ö}{{\"O}}1 {Ü}{{\"U}}1,
+  keywordstyle=\color{blue},commentstyle=\color{mygreen},
+  stringstyle=\color{mymauve},rulecolor=\color{black},
+  basicstyle=\footnotesize\ttfamily,numberstyle=\tiny\color{mygray},
+  captionpos=b, % sets the caption-position to bottom
+  keepspaces=true, % keeps spaces in text
+  numbers=left, 
+  numbersep=5pt, 
+  showspaces=false, 
+  showstringspaces=false,
+  showtabs=true, 
+  stepnumber=2, 
+  tabsize=2, 
+  title=\lstname
+}
+% Diese beiden Pakete müssen zuletzt geladen werden
+%\usepackage{hyperref} % Anklickbare Links im Dokument
+\usepackage{cleveref}
+
+% Daten für die Titelseite
+\title{\textbf{\Huge\Aufgabe}}
+\author{\LARGE Team-ID: \LARGE \TeamID \\\\
+	    \LARGE Team-Name: \LARGE \TeamName \\\\
+	    \LARGE Bearbeiter/-innen dieser Aufgabe: \\ 
+	    \LARGE \Namen\\\\}
+\date{\LARGE\today}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+\section{L"osungsidee}
+Zunächst wird die Wörterliste nach Länge, Anfangsbuchstabe und Endbuchstabe sortiert.
+Nun wird der Text \glqq getwistet\grqq.
+Alle Wörter mit weniger als vier Buchstaben sowie Leerzeichen, Sonderzeichen oder Satzzeichen werden ohne Änderung so stehen gelassen. Dann werden bei den Wörtern mit mehr als drei Buchstaben die mittleren Buchstaben vertauscht und sie werden wieder in den Text eingefügt.
+
+Um den Text zu \glqq enttwisten\grqq\ wird nach dem gleichen Schema verfahren. Allerdings funktioniert das \glqq Enttwisten\grqq\ einzelner Wörter anders. Zunächst wird überprüft, ob der Anfangsbuchstabe des Wortes ein Großbuchstabe ist. In der Wörterliste wird die Großschreibung am Satzanfang nicht berücksichtigt, daher wird im Wörterdictionary anhand der Länge und des Anfangs- sowie Endbuchstabens (bei großem Anfangsbuchstabe sowohl mit großem als auch mit kleinem Anfangsbuchstaben) auf die Liste mit möglichen Wörtern zugegriffen. Für jedes Wort in dieser Liste wird überprüft, ob die mittleren Buchstaben ein Anagramm zu den mittleren Buchstaben des \glqq getwisteten\grqq\ Wortes bilden. Alle Wörter, für die auch dieses Kriterium zutrifft, werden zu einer neuen Liste hinzugefügt. Eine Ausnahme bilden die Wörter mit großem Anfangsbuchstaben. Da ein Wort, das in der Liste steht, nicht zwingend einen großen Anfangsbuchstaben haben muss, wird für solche Wörter einfach der Anfangsbuchstabe des Ursprungswortes benutzt.
+Wenn sich in dieser Liste kein Wort befindet, gibt es in der Wörterliste kein Wort, das dem \glqq getwisteten\grqq\ Wort entspricht. Dann wird das \glqq getwistete\grqq\ Wort, mit einem \glqq\#\grqq\ zur Erkennung vorangestellt, in den Text eingefügt. Das \glqq \#\grqq\ sorgt dafür, dass man weiß, dass dieses Wort nicht \glqq enttwistet\grqq\ werden konnte.
+Befindet sich in der Liste genau ein Wort, so wird dieses genau so in den Text eingefügt, das getwistete Wort konnte erfolgreich dekodiert werden.
+Falls sich mehrere Wörter in der Liste befinden, werden diese, durch einen \glqq / \grqq\ getrennt, in den Text eingefügt. Dann muss der Leser entscheiden, welches Wort an dieser Stelle mehr Sinn macht.
+
+\section{Umsetzung}
+Das Sortieren der Wörterliste läuft folgendermaßen ab:
+Ein leeres dictionary wird erstellt.
+Mit einem for-loop wird über alle Wörter der Wörterliste iteriert. Dabei wird zunächst die Länge sowie der Anfangs- und Endbuchstabe bestimmt. 
+Wenn die Länge größer als drei ist, wird per try-except versucht, mit der Länge als key auf die Wörterliste zuzugreifen. Wenn es bereits ein Wort derselben Länge gab, so funktioniert dies. Andernfalls wird mit der Länge als key ein leeres dictionary in unserem dictionary erzeugt. Im dictionary, auf das man über den key der Länge zugreifen kann, wird nun versucht, ein dictionary mit dem Anfangsbuchstaben als key zu betreten. Sollte dieses noch nicht existieren, wird ein Neues erstellt.
+In dem dictionary, das man über den Anfangsbuchstaben als key betritt, wird nun analog versucht, eine Liste mit dem Endbuchstaben als key zu betreten und im Falle ihrer Nichtexistenz erstellt. Schlussendlich wird das zu sortierende Wort in dieser Liste abgelegt.
+Nach Ende des Sortierens kann man auf eine Liste mit Wörtern der Länge $n$, Anfangsbuchstaben \grqq a\grqq\ und Endbuchstaben \grqq z\grqq\ also folgendermaßen zugreifen: \lstinline|sorteddict[n]["a"]["z"]|
+Alle Wörter mit einer Länge kleiner als drei werden nicht in sorteddict übernommen, da diese Wörter vom Twisten/Enttwisten überhaupt nicht betroffen sind.
+
+Um den Text zu twisten oder zu enttwisten, geht man nahezu exakt gleich vor. Der einzige Unterschied besteht darin, was mit den Wörtern mit mehr als vier Buchstaben geschieht: Dies wird in die Funktionen twistword und untwistword ausgelagert. Die Funktion twisttext benötigt also als erstes Argument den zu twistenden/enttwistenden Text und als zweites einen Boolean, ob der Text getwistet oder enttwistet werden soll.
+Zunächst wird ein leerer String definiert, zu dem der getwistete/enttwistete Text Stück für Stück hinzugefügt wird.
+Dann wird noch ein leerer String definiert, der immer bis zu einem vollständigen Wort ergänzt werden soll.
+Mit einem for-loop wird über jedes Zeichen im gesamten Text iteriert.
+Es wird überprüft, ob das Zeichen zu einem Wort gehört, indem mit der Python-Bibliothek für Reguläre Ausdrücke ermittelt wird, ob es sich um einen der 26 Buchstaben des Alphabets, um ein ä, ö, ü oder ein ß handelt. Dann wird dieser Buchstabe zum zweiten anfangs definierten String hinzugefügt. Sobald ein Zeichen gefunden wird, dass nicht zu einem Wort gehört, wird getestet, ob das Wort mehr als drei Buchstaben hat. Dann wird, in Abhängigkeit vom Eingangsboolean, das Wort der twistword-/untwistword-Funktion übergeben und das Ergebnis an unseren ersten String angehängt. Wenn das Wort weniger als vier Buchstaben hat, wird es einfach sofort an den ersten String angehängt. Danach wird der zweite String zurückgesetzt, da dieses Wort zu Ende ist. Außerdem wird das Zeichen, aus dem wir folgerten, dass das Wort zu Ende sein müsse, an den ersten String angehängt.
+Nach diesem Schema wird der ganze Text getwisted oder enttwisted.
+
+Als nächstes betrachten wir die twistword-Funktion:
+Sie erstellt eine Liste aus den mittleren Buchstaben eines Wortes und mischt sie mithilfe des random-Moduls zufällig durch.
+Danach iteriert sie über die gemischte Liste und fügt die Buchstaben zum ersten Buchstaben hinzu. 
+Schließlich fügt sie den letzten Buchstaben hinzu und gibt das getwistete Wort zurück.
+
+Die untwistword-Funktion ist ein wenig komplizierter:
+Zunächst wird mithilfe der sortierten Wörterliste auf die Liste aller Wörter zugegriffen, welche die gleiche Länge sowie den gleichen Anfangs- und Endbuchstaben haben.
+Bei Großbuchstaben wird, wie oben erklärt, auch auf die Liste mit großem Anfangsbuchstaben zugegriffen. 
+Das Zugreifen funktioniert über try-except-Konstrukte. Wenn das Zugreifen auf beispielsweise eine bestimmte Länge nicht funktioniert, weiß man, dass es keine Wörter mit dieser Länge in der sortierten Wörterliste gibt.
+
+Hat man schließlich eine Liste mit in Frage kommenden Wörtern erstellt, so wird über die Wörter dieser Liste iteriert und überprüft, ob die mittleren Buchstaben eines Wortes ein Anagramm zu den mittleren Buchstaben des zu enttwistenden Wortes bilden. Dies geschieht mithilfe der Funktion middleanagramm. 
+
+Diese Funktion erhält als Input zwei zu vergleichende Wörter. Es wird mit einem for-loop über alle mittleren Buchstaben des einen Wortes iteriert und der aktuelle Buchstabe wird aus der Liste der mittleren Buchstaben des anderen Wortes herausgestrichen. Wenn in einer der beiden Listen Buchstaben übrigbleiben, sind die beiden Wörter keine Anagramme und die Funktion gibt False zurück, ansonsten True. 
+
+Danach wird über die Liste der noch übrigbleibenden Wörter iteriert. Es wird gezählt, wie oft ein Wort in der Liste vorkommt und dann so oft entfernt bis von jedes Wort noch genau einmal übrigbleibt. Schließlich wird die Anzahl der Wörter in der Liste gezählt. Die Ausgabe der Funktion wurde bereits im Lösungsansatz beschrieben. 
+
+\section{Beispiele}
+\subsection{Beispiel}
+\noindent Original: Der Twist   (Englisch twist = Drehung, Verdrehung)  war ein Modetanz im 4/4-Takt,   der in den frühen 1960er Jahren populär   wurde und zu   Rock'n'Roll, Rhythm and Blues oder spezieller  Twist-Musik getanzt wird.
+
+\noindent Getwistet: ﻿Der Tiswt   (Ecgsnlih twist = Dhrueng, Vernedruhg)  war ein Mnoedtaz im 4/4-Tkat,   der in den füerhn 1960er Jraehn ppäoulr   wurde und zu   Rock'n'Rlol, Rhyhtm and Buels oedr szepeellir  Tiswt-Msuik gtaenzt wird.
+
+\noindent Enttwisted: Der \#Tiswt   (Englisch \#twist = Drehung, Verdrehung)  war ein \#Mnoedtaz im 4/4-Takt,   der in den frühen/führen 1960er Jahren populär   wurde und zu   Rock'n'\#Rlol, \#Rhyhtm and Blues oder spezieller  \#Tiswt-Musik getanzt wird.
+
+\noindent Kommentar: Man sieht, dass Fremdwörter im Allgemeinem nicht bekannt sind und dementsprechend die Ausgabe dem getwisteten Wort mit einem \glqq\#\grqq\ entspricht.
+\subsection{Beispiel}
+\label{hexenmeister}
+Original: Hat der alte Hexenmeister sich doch einmal wegbegeben! Und nun sollen seine Geister auch nach meinem Willen leben. Seine Wort und Werke merkt ich und den Brauch, und mit Geistesstärke tu ich Wunder auch.
+
+\noindent Getwistet: Hat der atle Hetemsiexenr scih dcoh einaml wbgbeegeen! Und nun sellon sniee Gitseer acuh ncah mneeim Wllein leben. Sneie Wort und Wreke mkret ich und den Bacruh, und mit Gttseieksärse tu ich Wneudr auch.
+
+\noindent Enttwisted: Hat der alte Hexenmeister sich doch einmal \#wbgbeegeen! Und nun sollen seine Geister auch nach meinem Willen leben. Seine Wort und Werke merkt ich und den Brauch, und mit Geistesstärke tu ich Wunder auch.
+
+\noindent Kommentar: Das Wort wegbegeben ist der Wörterliste unbekannt
+\subsection{Beispiel}
+
+\noindent Original: Ein Restaurant, welches a la carte arbeitet, bietet sein Angebot ohne eine vorher festgelegte Menüreihenfolge an. Dadurch haben die Gäste zwar mehr Spielraum bei der Wahl ihrer Speisen, für das Restaurant entstehen jedoch zusätzlicher Aufwand, da weniger Planungssicherheit vorhanden ist.
+
+\noindent Getwistet: Ein Rnasauertt, whelces a la ctrae aeeirbtt, bietet sein Aeogbnt ohne enie vheorr feteggestle Mnogrleeüeifhne an. Dcudrah haebn die Gsäte zawr mher Silraeupm bei der Wahl irher Seepisn, für das Rnetuasrat etetshenn jdoech zstileczäuhr Aunfwad, da wegienr Puhnsgsareielnihct vodrnhaen ist.
+
+\noindent Enttwistet: Ein Restaurant, welches a la \#ctrae arbeitet/abrietet, bietet sein Angebot ohne eine vorher festgelegte \#Mnogrleeüeifhne an. Dadurch haben die Gäste zwar mehr Spielraum bei der Wahl ihrer Speisen, für das Restaurant entstehen jedoch zusätzlicher Aufwand, da weniger \#Puhnsgsareielnihct vorhanden ist.
+
+\noindent Kommentar: Längere Zusammengesetzte Wörter sind in der Wörterliste ebenfalls nicht vorhanden
+\subsection{Beispiel}
+
+\noindent Original: Augusta Ada Byron King, Countess of Lovelace, war eine britische Adelige und Mathematikerin, die als die erste Programmiererin überhaupt gilt. Bereits 100 Jahre vor dem Aufkommen der ersten Programmiersprachen ersann sie eine Rechen-Mechanik, der einige Konzepte moderner Programmiersprachen vorwegnahm.
+
+\noindent Getwistet: Astugua Ada Boyrn Knig, Constues of Laecolve, war eine bchisrtie Adligee und Mtamrkitaieehn, die als die esrte Pegarrimoriemrn üpbruaeht gilt. Betries 100 Jahre vor dem Afkmmoeun der eerstn Pgeparamcsmrerrihon enrsan sie eine Reehcn-Mahicnek, der eginie Ktzpnoee mrdeoenr Peersapcohamrmigrrn veoawgnhrm.
+
+\noindent Enttwistet: \#Astugua Ada \#Boyrn \#Knig, \#Constues of \#Laecolve, war eine britische Adelige und Mathematikerin, die als die erste Programmiererin überhaupt gilt. Bieters/Bereits/Breites 100 Jahre vor dem Aufkommen der ersten Programmiersprachen ersann sie eine Rechen-Mechanik, der einige Konzepte moderner Programmiersprachen vorwegnahm.
+
+\noindent Kommentar: Man sieht, dass vor allem fremdsprachige Eigennamen unbekannt sind. Außerdem gibt es hier ein sehr schönes Beispiel für ein nicht eindeutiges Wort: \glqq Bereits\grqq\ kann genauso auch als \glqq Bieters\grqq\ oder \glqq Breites\grqq\ dekodiert werden.
+\subsection{Beispiel}
+Der Auszug aus Alice im Wunderland wird hier nicht wiedergegeben, zusammenfassend lässt sich feststellen, dass Wörter der altdeutschen Rechtschreibung größtenteils nicht bekannt sind.
+
+\section{Quellcode}
+\lstinputlisting[language=Python]{Aufgabe2.py}
+\end{document}

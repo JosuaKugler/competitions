@@ -1,0 +1,154 @@
+\documentclass[a4paper,10pt,ngerman]{scrartcl}
+\usepackage{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8x]{inputenc}
+\usepackage[a4paper,margin=2.5cm,footskip=0.5cm]{geometry}
+
+% Die nächsten drei Felder bitte anpassen:
+\newcommand{\Aufgabe}{Aufgabe 1: Superstar} % Aufgabennummer und Aufgabennamen angeben
+\newcommand{\TeamID}{00920}       % Team-ID aus dem PMS angeben
+\newcommand{\TeamName}{Paddy Jo} % Team-Namen angeben
+\newcommand{\Namen}{Patrick Müller, Josua Kugler} % Namen der Bearbeiter/-innen dieser Aufgabe angeben
+ 
+% Kopf- und Fußzeilen
+\usepackage{scrlayer-scrpage, lastpage}
+\setkomafont{pageheadfoot}{\large\textrm}
+\lohead{\Aufgabe}
+\rohead{Team-ID: \TeamID}
+\cfoot*{\thepage{}/\pageref{LastPage}}
+
+% Position des Titels
+\usepackage{titling}
+\setlength{\droptitle}{-1.0cm}
+
+% Für mathematische Befehle und Symbole
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[gen]{eurosym}
+
+% Für Bilder
+\usepackage{graphicx}
+
+% Für Algorithmen
+\usepackage{algpseudocode}
+
+% Für Quelltext
+\usepackage{listings}
+\usepackage{color}
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+\lstset{
+  %inputpath="C:/Users/DELL/windows_ordner/Documents/python files/bwinf19",
+  extendedchars=true,
+  literate={ä}{{\"a}}1 {ö}{{\"o}}1 {ü}{{\"u}}1 {ß}{{\ss}}1 {Ä}{{\"A}}1 {Ö}{{\"O}}1 {Ü}{{\"U}}1,
+  keywordstyle=\color{blue},commentstyle=\color{mygreen},
+  stringstyle=\color{mymauve},rulecolor=\color{black},
+  basicstyle=\footnotesize\ttfamily,numberstyle=\tiny\color{mygray},
+  captionpos=b, % sets the caption-position to bottom
+  keepspaces=true, % keeps spaces in text
+  numbers=left, 
+  numbersep=5pt, 
+  showspaces=false, 
+  showstringspaces=false,
+  showtabs=true, 
+  stepnumber=2, 
+  tabsize=2, 
+  title=\lstname
+}
+% Diese beiden Pakete müssen zuletzt geladen werden
+%\usepackage{hyperref} % Anklickbare Links im Dokument
+\usepackage{cleveref}
+
+% Daten für die Titelseite
+\title{\textbf{\Huge\Aufgabe}}
+\author{\LARGE Team-ID: \LARGE \TeamID \\\\
+	    \LARGE Team-Name: \LARGE \TeamName \\\\
+	    \LARGE Bearbeiter/-innen dieser Aufgabe: \\ 
+	    \LARGE \Namen\\\\}
+\date{\LARGE\today}
+
+\begin{document}
+\maketitle
+\tableofcontents
+
+\section{Lösungsidee}
+Wird eine Anfrage gestellt, so erhält man die Information, dass eine Person, nennen wir sie A, einer anderen Person B folgt oder nicht folgt.
+
+Wenn A B folgt, dann ist A mit Sicherheit kein Superstar. Wenn A B nicht folgt, dann ist B kein Superstar. Daher kann man bei jeder Anfrage eine Person als Superstar ausschließen.
+Die andere Person ist nun unser Superstarkandidat.
+In der nächsten Anfrage wird nun gefragt, ob der Superstarkandidat einer anderen noch nicht ausgeschlossenen Person folgt, etc. Dabei werden alle Anfragen gespeichert.
+Schließlich bleibt nur noch eine Person als Kandidat übrig. Die Ermittlung eines solchen Kandidaten benötigt also $n-1$ Anfragen, wenn $n$ die Anzahl der Teilnehmer ist.
+Für den Kandidaten muss nun noch verifiziert werden, dass er tatsächlich ein Superstar sein kann. Das ist genau dann der Fall, wenn alle anderen Personen dem Kandidaten folgen und er keiner anderen Person folgt. Daher wird zuerst in den gespeicherten Anfragen nach Anfragen gesucht, bei denen eine Person dem Kandidaten folgt. Danach werden weitere Anfragen gestellt, bis entweder bestätigt wurde, dass alle Personen dem Kandidaten folgen oder eine Person ihm nicht folgt und es also keinen Superstar gibt. Dieser Teil benötigt erneut maximal $n-1$ Anfragen.
+
+Wenn bis hierher nicht gezeigt wird, dass der Superstarkandidat nicht Superstar ist, wird nun in den gespeicherten Anfragen nach Personen gesucht, denen der Kandidat folgt.
+Danach wird solange mit Anfragen überprüft, ob es jemanden gibt, dem der Kandidat folgt bis entweder bestätigt wurde, dass er niemandem folgt und er tatsächlich Superstar ist oder es eine Person gibt, der er folgt und er dementsprechend kein Superstar ist. Auch hierfür werden maximal $n-1$ Anfragen benötigt. Da während der Ermittlung des Kandidaten bereits mindestens eine Aussage über den Kandidaten getroffen wird. Diese Anfrage muss also während der Verifizierung des Kandidaten nicht mehr gestellt werden. Insgesamt lässt sich also mit maximal $3n-4$ Anfragen ermitteln, ob es einen Superstar gibt und wenn ja, wie er heißt.
+
+\section{Umsetzung}
+Zunächst wird die als Kommandozeilenargument übergebene Textdatei eingelesen und es werden zwei Listen erstellt. Eine Liste (\lstinline|grouplist|) enthält alle Teilnehmer der Gruppe. Diese Liste wird von allen Funktionen benutzt. Die andere Liste (\lstinline|followlist|) enthält alle Beziehungen zwischen Personen. Wenn eine Person A einer Person B und eine Person C einer Person D folgt, wird dies in der Form \lstinline|[[A,B],[C,D]]| dargestellt. Auf diese Liste darf nur die Funktion \lstinline|Anfrage| zugreifen.
+
+Die Funktion \lstinline|getsuperstarcandidate| schließt mittels einer Anfrage stets eine Person aus, die nicht Superstar ist und fügt diese zur Liste \lstinline|nsuperstar| hinzu, die andere Person wird \lstinline|superstarcandidate|.
+Wird eine Anfrage der Form \lstinline|Anfrage(A,B)| gestellt und mit False beantwortet, so wird die Liste \lstinline|[A,B]| unter \lstinline|Anfragenliste[0]| gespeichert, andernfalls unter \lstinline|Anfragenliste[1]|.
+Dann ruft sich die Funktion \lstinline|getsuperstarcandidate| selbst mit der Person \lstinline|superstarcandidate| und einer weiteren Person auf. Die zweite Person darf nicht in der Liste \lstinline|nsuperstar| sein, damit man nicht Personen ausschließt, die bereits ausgeschlossen sind. Auch von diesen beiden Personen wird wieder eine ausgeschlossen und zur Liste \lstinline|nsuperstar| hinzugefügt.
+Sobald alle Personen aus \lstinline|grouplist| bis auf eine ausgeschlossen sind, die Länge von \lstinline|nsuperstar| also um eins geringer als die Länge von \lstinline|grouplist| ist, muss noch überprüft werden, ob die übrige Person tatsächlich Superstar sein kann.
+Dies geschieht mit der Funktion \lstinline|verifysuperstar|.
+
+Diese überprüft zunächst, welche gespeicherte Anfragen es gibt, bei denen eine Person dem Kandidaten folgt, indem mit einem for-loop über alle positiv beantworteten Anfragen, also \lstinline|Anfragenliste[1]|, iteriert wird. Jede Person, die dem Kandidaten folgt, wird zur Liste \lstinline|candidatefollowers| hinzugefügt. In den gespeicherten Anfragen gibt es keine Anfragen, die den Kandidaten ausschließen, da er ansonsten bereits in der Liste \lstinline|nsuperstar| enthalten wäre. Diese Anfragen werden nur untersucht, um die Zahl der noch zu stellenden Anfragen zu minimieren.
+Danach werden weitere Anfragen gestellt, indem mithilfe eines for-loops über jede Person aus der \lstinline|grouplist| iteriert wird, die sich nicht bereits in \lstinline|candidatefollowers| befindet. Sollte es eine Person geben, die dem Kandidaten nicht folgt, so gibt es keinen Superstar in dieser Gruppe, da alle anderen Personen bereits davor ausgeschlossen wurden. In diesem Fall gibt die Funktion mittels eines return-statements diese Information zurück.
+Wenn dies nicht der Fall ist, wird nun in den gespeicherten Anfragen nach Personen gesucht, denen der Kandidat nicht folgt, indem über alle negativ beantworteten Anfragen iteriert wird. Personen, denen der Kandidat nicht folgt, werden zur Liste \lstinline|candidatenotfollows| hinzugefügt.
+Danach wird solange mit Anfragen der Form \lstinline|Anfrage(candidate,person)| mit den Personen, die nicht in \lstinline|candidatenotfollows| enthalten sind, überprüft, ob es jemanden gibt, dem der Kandidat folgt, bis entweder bestätigt wurde, dass er niemandem folgt, dann ist er tatsächlich Superstar und die Funktion gibt dies zurück, oder jemand gefunden wird, dem er folgt. Dann ist er nicht Superstar der Gruppe und es gibt keinen Superstar in dieser Gruppe. Da die Funktion \lstinline|getsuperstarcandidate| das Ergebnis der \lstinline|verifysuperstar|-Funktion zurückgibt, erhält man somit das gewünschte Ergebnis als Rückgabewert von \lstinline|getsuperstar|.
+Die Kosten werden berechnet, indem bei der Funktion \lstinline|Anfrage| bei jedem Aufruf die Variable \lstinline|Anfn| um 1 erhöht wird.
+\section{Beispiele}
+\subsection{Beispiel}
+\label{bspjustin}
+\noindent Selena folgt Justin, also ist Selena kein Superstar\\
+Justin folgt Hailey nicht, also ist Hailey kein Superstar\\ 
+Hailey folgt Justin                          \\
+Justin folgt Selena nicht                    \\
+Justin ist der Superstar dieser Gruppe!      \\
+Kosten: 4\euro{}\\
+Kommentar: Zunächst wurde mithilfe der Funktion \lstinline|getsuperstarcandidate| ermittelt, das sowohl Selena als auch Hailey nicht Superstar sein können. Dann wird noch überprüft, ob alle Justin folgen: Von Selena weiß man bereits, dass sie Justin folgt (1. Anfrage), sodass man nur noch überprüfen muss, ob Hailey Justin folgt.
+Schließlich muss noch gezeigt werden, dass Justin keiner anderen Person folgt. Man weiß bereits, dass Justin Hailey nicht folgt, daher muss nur noch Selena überprüft werden. 
+Es stellt sich heraus, dass Justin der Superstar dieser Gruppe ist.
+\subsection{Beispiel}
+\noindent Turing folgt Hoare, also ist Turing kein Superstar \\
+Hoare folgt Dijkstra, also ist Hoare kein Superstar\\
+Dijkstra folgt Knuth nicht, also ist Knuth kein Superstar  \\
+Dijkstra folgt Codd nicht, also ist Codd kein Superstar\\    
+Turing folgt Dijkstra  \\
+Knuth folgt Dijkstra \\
+Codd folgt Dijkstra \\
+Dijkstra folgt Turing nicht\\
+Dijkstra folgt Hoare nicht   \\                              
+Dijkstra ist der Superstar dieser Gruppe! \\                 
+Kosten: 9\euro{}\\
+Kommentar: Dieses Beispiel folgt dem gleichen Schema wie Beispiel \ref{bspjustin}.
+\subsection{Beispiel}
+Edsger folgt Jitse, also ist Edsger kein Superstar\\
+Jitse folgt Jorrit nicht, also ist Jorrit kein Superstar\\
+Jitse folgt Pia nicht, also ist Pia kein Superstar\\
+Jitse folgt Rineke nicht, also ist Rineke kein Superstar\\
+Jitse folgt Rinus nicht, also ist Rinus kein Superstar\\
+Jitse folgt Sjoukje nicht, also ist Sjoukje kein Superstar\\
+Jorrit folgt Jitse nicht\\
+Es gibt also keinen Superstar!\\
+Kosten: 8\euro{}\\
+Kommentar: Man erkennt, dass zunächst angefragt wurde, ob Edsger Jitse folgt. Diese Anfrage wurde mit True beantwortet, sodass man daraus folgern kann, dass Edsger kein Superstar sein kann.
+Jitse ist also nun \lstinline|possiblesuperstar|. Es werden nun weitere Anfragen gestellt, bis alle Personen außer Jitse ausgeschlossen sind. Es wird also die Funktion \lstinline|verifysuperstar("Jitse")| aufgerufen. Diese überprüft nun mithilfe von Anfragen, ob alle Personen Jitse folgen. Dabei findet sie heraus, dass Jorrit Jitse nicht folgt. Also gibt es keinen Superstar.
+\subsection{Beispiel}
+Das Ergebnis des 4. Beispiels ist, dass Folke Superstar der Gruppe ist. Die Kosten belaufen sich auf 182\euro{}
+\subsection{Beispiel}
+Alfred folgt Bernhard, also ist Alfred kein Superstar\\
+Bernhard folgt Carl, also ist Bernhard kein Superstar\\
+Carl folgt David, also ist Carl kein Superstar\\
+Alfred folgt David\\
+Bernhard folgt David\\
+David folgt Alfred nicht\\
+David folgt Bernhard nicht\\
+David folgt Carl nicht\\
+David ist der Superstar dieser Gruppe!\\
+Kosten: 8\euro{}\\
+In diesem Beispiel ist der worst-case erreicht: Es gibt vier Personen, die maximale Zahl an Anfragen beträgt also $3n-4=3*4-4=8$. Das liegt daran, dass bei den Anfragen zur Ermittlung des Kandidaten nur eine einzige Anfrage gemacht wird, bei der Superstar David involviert ist.
+\section{Quellcode}
+\lstinputlisting[language=Python]{Aufgabe1.py}
+\end{document}

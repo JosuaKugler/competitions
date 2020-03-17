@@ -1,0 +1,98 @@
+\documentclass[a4paper,10pt,ngerman]{scrartcl}
+\usepackage{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8x]{inputenc}
+\usepackage[a4paper,margin=2.5cm,footskip=0.5cm]{geometry}
+
+% Die nächsten drei Felder bitte anpassen:
+\newcommand{\Name}{Team: Paddy Jo} % Teamname oder Vor- und Nachnamen angeben
+\newcommand{\TeamId}{00920}                       % Team-ID aus dem PMS angeben
+\newcommand{\Aufgabe}{Aufgabe 3: Voll daneben} % Aufgabennummer und Aufgabennamen angeben
+ 
+% Kopf- und Fußzeilen
+\usepackage{scrlayer-scrpage}
+\setkomafont{pageheadfoot}{\large\textrm}
+\chead{\Aufgabe}
+\lofoot{\Name}
+\cfoot{\thepage}
+\rofoot{Team-ID: \TeamId}
+
+% Für mathematische Befehle und Symbole
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+% Für Bilder
+\usepackage{graphicx}
+
+% Für Algorithmen
+\usepackage{algpseudocode}
+
+% Für Quelltext
+\usepackage{listings}
+\usepackage{color}
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+\lstset{
+  literate={ä}{{\"a}}1 {ö}{{\"o}}1 {ü}{{\"u}}1 {ß}{{\ss}}1 {Ä}{{\"A}}1 {Ö}{{\"O}}1 {Ü}{{\"U}}1,
+  extendedchars = true,
+  keywordstyle=\color{blue},commentstyle=\color{mygreen},
+  stringstyle=\color{mymauve},rulecolor=\color{black},
+  basicstyle=\footnotesize\ttfamily,numberstyle=\tiny\color{mygray},
+  captionpos=b, % sets the caption-position to bottom
+  keepspaces=true, % keeps spaces in text
+  numbers=left, numbersep=5pt, showspaces=false,showstringspaces=true,
+  showtabs=false, stepnumber=2, tabsize=2, title=\lstname
+}
+\lstdefinelanguage{JavaScript}{ % JavaScript ist als einzige Sprache noch nicht vordefiniert
+  keywords={break, case, catch, continue, debugger, default, delete, do, else, finally, for, function, if, in, instanceof, new, return, switch, this, throw, try, typeof, var, void, while, with},
+  morecomment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  morestring=[b]',
+  morestring=[b]",
+  sensitive=true
+}
+
+% Diese beiden Pakete müssen als letztes geladen werden
+%\usepackage{hyperref} % Anklickbare Links im Dokument
+\usepackage{cleveref}
+
+% Daten für die Titelseite
+\title{\Huge\Aufgabe}
+\author{\LARGE\Name\\Team-ID: \TeamId}
+\date{\LARGE\today}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+\section{Lösungsidee}
+Als erstes haben wir uns mit dem Problem an sich befasst und überlegt, ob Al überhaupt Verlust macht. Dazu haben wir zuerst überlegt, wie es bei 1000 Teilnehmern aussehen würde, die alle auf eine andere Zahl setzen. Dann sind Al's Einnahmen $ 1000 \ast 25 \$ = 25000\$ $. Bei 1000 verschiedenen gesetzten Zahlen (im Folgenden als Stellen oder Elemente bezeichnet) kann man die kleinstmögliche Auszahlung erreichen, indem man immer gleich viele Stellen zu einer Gruppe (im Folgenden als Sublist bezeichnet) zusammenfasst. Dadurch hat man 10 Sublists mit 100 Stellen pro Sublist. Setzt Al nun seine 10 Glückszahlen in die Mitte jeder Sublist, also auf 50, 150, 250, etc., beträgt Al's Gewinn 1275$\$$. Er macht also selbst in einem schlechten Fall noch Gewinn. Gehen wir nun davon aus, dass bei einer ungleichen Verteilung zwar in einer Sublist höhere Kosten entstehen, dafür in einer anderen geringere, ist dies der ein sehr guter Lösungsweg. \\
+Zur Lösung des Problems haben wir also nun den Ansatz verfolgt, dass es generell effizient ist, die Stellen in 10 Sublisten zusammenzufassen. Damit dies sinnvoll ist, muss die Liste der Stellen zuerst sortiert werden. Ist dies geschehen, bildet man die Gruppen. In jeder Gruppe sind nun die Stellen, die möglichst nah aneinander liegen. Da es jedoch vorkommen kann, dass 2 Stellen sehr nah beieinander liegen aber trotzdem in zwei verschiedenen Sublists liegen, muss danach noch überprüft werden, ob es sinnvoll ist, einzelne Stellen noch unter den Sublisten zu verschieben.
+
+\section{Umsetzung}
+Wie bereits eingehend erwähnt, müssen die Stellen zuerst sortiert werden. Am sinnvollsten ist es, sie aufsteigend zu sortieren. Danach wird berechnet, wie viele Stellen in eine Sublist müssen. Dazu wird die Anzahl der Stellen durch 10 geteilt. Falls keine ganze Zahl dabei herauskommt, wird diese abgerundet. Dadurch kann es passieren, dass eine elfte Sublist entsteht, in der die übrigen Elemente liegen. Da Al jedoch nur 10 Glückszahlen hat, darf es auch nur 10 Sublists geben. Daher wird in diesem Fall errechnet, bei welchen Sublists es günstig wäre, ein weiteres Element hinzuzufügen. Dies lösen wir, indem wir schauen, für welche der 10 ersten Sublists die jeweils nächste Stelle den kleinsten Abstand hat. Haben wir eine Sublist gefunden, für die der Abstand im Vergleich zu allen anderen am kleinsten ist, fügen wir die Stelle zu dieser Sublist hinzu. Da sich dadurch jedoch alle nachfolgenden Sublists um eine Stelle nach hinten verschieben, können wir nicht alle Elemente aus der elften Sublists auf einmal einfügen, sondern müssen zwischen jedem Vorgang alle Sublisten und auch die Abstände neu berechnen, um eine in dieser Hinsicht optimale Verteilung der übrigen Elemente zu erreichen. Die Verteilung ist nun schon relativ gut. Um sie jedoch noch zu verbessern, wird der Mittelwert der Abstände zwischen den Stellen jeder Sublist berechnet. Ist der Abstand zwischen der letzten Stelle einer Sublist und der ersten Stelle der nächsten Sublist kleiner als der Mittelwert beider Sublists und der Mittelwert der ersten Sublist kleiner als der der zweiten, so wird die erste Stelle aus der zweiten Sublist zur ersten hinzugefügt. Die anderen Sublists verschieben sich dadurch nicht, in der zweiten Sublist ist so lediglich ein Element weniger und in der ersten eben ein Element mehr. Dieser Vorgang wird für alle 10 Sublists durchgeführt. Danach sollten die Stellen optimal auf die Sublists verteilt sein. Nun müssen nur noch die Glückszahlen in die Mitte jeder Sublist gesetzt werden. Falls in einer Sublist eine ungerade Anzahl an Stellen ist, wird abgerundet. Dies hat im durchschnitt keinen Einfluss auf das Endergebnis.
+
+
+\section{Beispiele}
+Das erste Beispiel der BwInf-Website führt zu folgenden Glückszahlen: \\
+45, 140, 235, 330, 425, 520, 615, 710, 805, 900, 970 \\
+Dadurch erzielt Al einen Gewinn von 500$\$$. \\
+Für das zweite Beispiel werden die folgenden Glückszahlen errechnet: \\
+42, 123, 226, 336, 393, 505, 584, 754, 857, 926 \\
+Der Gewinn beläuft sich dabei auf 299$\$$. \\
+Für das dritte Beispiel sind folgende Glückszahlen optimal: \\
+80, 220, 280, 380, 480, 540, 640, 720, 800, 900 \\
+Der Gewinn beläuft sich auf 300$\$$.
+\vspace{5mm} \\
+Bei unter 10 Teilnehmern hat Al logischerweise keinen Verlust, da er auf jede Stelle eine Glückszahl setzen kann. \\
+Bei mehr als 10 Teilnehmern ist es für Al natürlich günstig, wenn mehrere Teilnehmer auf die gleiche Stelle setzen. \\
+Passiert dies nicht, ist eine Haufenbildung auch günstig für Al, da er seine Glückszahl jeweils in die Mitte eines Haufens setzen kann. \\
+Im schlimmsten Fall für Al sind entweder 20 Haufen gleichmäßig verteilt oder einzelne Zahlen gleichmäßig verteilt, was zu einem ähnlichen Ergebnis führt. Ist z.B. jede zehnte Stelle belegt, führt dies für Al zu einem Gewinn von nur 150$\$$. Jedoch macht er selbst in diesem Worst-Case noch Gewinn.
+
+\section{Quellcode}
+\lstinputlisting[language=Python]{Aufgabe3.py}
+
+
+\end{document}
